@@ -82,6 +82,13 @@ class BinaryTree {
         removeImpl(value, this.root);
     }
 
+    traverse(node = null) {
+        const n = node || this.root;
+        if (n.left) this.traverse(n.left);
+        console.log(n.value);
+        if (n.right) this.traverse(n.right);
+    }
+
     dump() {
         console.log(this.root);
     }
@@ -98,5 +105,7 @@ console.log('insert(6)');
 binaryTree.insert(6);
 binaryTree.dump();
 console.log('search(6) = ', binaryTree.search(6));
+binaryTree.traverse();
 binaryTree.remove(6);
 binaryTree.dump();
+binaryTree.traverse();
