@@ -51,12 +51,20 @@ class BinaryTree {
         insertImpl(value, this.root);
     }
 
+    dump() {
+        console.log(this.root);
+        }
+    }
+
 }
 
 let node1 = new TreeNode(1);
 let node2 = new TreeNode(10);
 let root = new TreeNode(5, node1, node2);
 let binaryTree = new BinaryTree(root);
-console.log(binaryTree.search(1));
+binaryTree.dump();
+console.log('search(1) = ', binaryTree.search(1));
+console.log('insert(6)');
 binaryTree.insert(6);
-console.log(binaryTree.search(6));
+binaryTree.dump();
+console.log('search(6) = ', binaryTree.search(6));
