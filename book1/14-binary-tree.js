@@ -51,9 +51,39 @@ class BinaryTree {
         insertImpl(value, this.root);
     }
 
+    remove(value) {
+
+        const lift = (node, nodeToDelete) => {
+            if (node.left) {
+                node.left = lift(node.left, nodeToDelete);
+                return node;
+            }
+            nodeToDelete.value = node.value;
+            return node.right;
+        };
+
+        const removeImpl = (val, node) => {
+            if (!node) return null;
+            if (val < node.value) {
+                node.left = removeImpl(val, node.left);
+                return node;
+            }
+            if (val > node.value) {
+                node.right = removeImpl(val, node.right);
+                return node;
+            }
+            if (val == node.value) {
+                if (!node.left) return node.right;
+                if (!node.right) return node.left;
+                node.right = lift(node.right, node);
+                return node;
+            }
+        };
+        removeImpl(value, this.root);
+    }
+
     dump() {
         console.log(this.root);
-        }
     }
 
 }
@@ -68,3 +98,5 @@ console.log('insert(6)');
 binaryTree.insert(6);
 binaryTree.dump();
 console.log('search(6) = ', binaryTree.search(6));
+binaryTree.remove(6);
+binaryTree.dump();
