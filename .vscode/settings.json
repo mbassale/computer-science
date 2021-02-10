@@ -1,3 +1,7 @@
 {
-    "python.pythonPath": "/Users/mbassale/.pyenv/versions/3.9.0/bin/python"
+    "python.pythonPath": "/Users/mbassale/.pyenv/versions/3.9.0/bin/python",
+    "files.associations": {
+        "cstdio": "cpp",
+        "__config": "cpp"
+    }
 }
