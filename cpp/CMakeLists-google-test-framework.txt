@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 3.17)
+project(cpp)
+
+find_package(GTest REQUIRED)
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(cpp 11-testing-google-test-framework.cpp)
+
+target_link_libraries(cpp GTest::GTest GTest::Main)
