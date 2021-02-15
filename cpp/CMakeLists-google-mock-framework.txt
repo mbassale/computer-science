@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.17)
+project(cpp)
+
+enable_testing ()
+find_package(GTest CONFIG REQUIRED)
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(cpp 11-testing-google-mock-framework.cpp)
+
+target_link_libraries(cpp GTest::gmock_main)
