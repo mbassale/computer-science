@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 3.17)
+project(cpp)
+
+find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(cpp 11-testing-boost-test-library.cpp)
+
+target_link_libraries(cpp ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
