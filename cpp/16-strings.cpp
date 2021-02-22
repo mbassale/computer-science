@@ -209,3 +209,39 @@ TEST_CASE("std::string find_first_of") {
         REQUIRE(sentence.find_first_of("Xx"s) == std::string::npos);
     }
 }
+
+TEST_CASE("STL number to string conversion functions") {
+    using namespace std::literals::string_literals;
+    SECTION("to_string") {
+        REQUIRE("8675309"s == std::to_string(8675309));
+    }
+    SECTION("to_wstring") {
+        REQUIRE(L"109951.162778"s == std::to_wstring(109951.1627776));
+    }
+}
+
+TEST_CASE("STL string to number conversion functions") {
+    using namespace std::literals::string_literals;
+    SECTION("stoi") {
+        REQUIRE(std::stoi("8675309"s) == 8675309);
+    }
+    SECTION("stoi") {
+        REQUIRE_THROWS_AS(std::stoi("1099511627776"s), std::out_of_range);
+    }
+    SECTION("stoul with all valid characters") {
+        size_t last_index{};
+        const auto result = std::stoul("0xD3C34C3D"s, &last_index, 16);
+        REQUIRE(result == 0xD3C34C3D);
+        REQUIRE(last_index == 10);
+    }
+    SECTION("stoul") {
+        size_t last_index{};
+        const auto result = std::stoul("42six"s, &last_index);
+        REQUIRE(result == 42);
+        REQUIRE(last_index == 2);
+    }
+    SECTION("stod") {
+        REQUIRE(std::stod("2.7182818"s) == Approx(2.7182818));
+    }
+}
+
