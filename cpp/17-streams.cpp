@@ -1,6 +1,6 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include <iostream>
+#include <sstream>
 #include <string>
 #include <bitset>
 #include <iomanip>
@@ -102,4 +102,97 @@ TEST_CASE("stream manipulators") {
                         "Avogadro's number: 6.022142e-23\n"
                         "the Hogwarts platform: 9.75\n"
                         "Always eliminate deadc0de");
+}
+
+template <typename T>
+std::ostream& operator<<(std::ostream& s, std::vector<T> v) {
+    s << "Size: " << v.size() << "\nCapacity: " << v.capacity() << "\nElements:\n";
+    for (const auto& element : v) {
+        s << "\t" << element << "\n";
+    }
+    return s;
+}
+
+TEST_CASE("user-defined types on ostream") {
+    using namespace std;
+    const vector<string> characters {
+        "Bobby Shaftoe",
+        "Lawrence Waterhouse",
+        "Gunter Bischoff",
+        "Earl Comstock"
+    };
+    ostringstream os;
+    os << characters;
+    ostringstream os2;
+    os2 << "Size: 4\nCapacity: " << characters.capacity() << "\nElements:\n\tBobby Shaftoe\n\tLawrence Waterhouse\n\tGunter Bischoff\n\tEarl Comstock\n";
+    REQUIRE(os.str() == os2.str());
+}
+
+template <typename T>
+std::istream& operator>>(std::istream& s, std::deque<T>& t) {
+    T element;
+    while (s >> element) {
+        t.emplace_back(std::move(element));
+    }
+    return s;
+}
+
+TEST_CASE("user-defined types on istream") {
+    using namespace std;
+    deque<int> numbers;
+    istringstream is;
+    is.str("1 2 3 4 5");
+    is >> numbers;
+    int sum{};
+    ostringstream os;
+    os << "Cumulative sum:\n";
+    for (const auto& element : numbers) {
+        sum += element;
+        os << sum << "\n";
+    }
+    REQUIRE(os.str() == "Cumulative sum:\n1\n3\n6\n10\n15\n");
+}
+
+TEST_CASE("ostringstream produces strings with str") {
+    using namespace std;
+    ostringstream ss;
+    ss << "By Grabthar's hammer, ";
+    ss << "by the suns of Worvan. ";
+    ss << "You shall be avenged.";
+    const auto lazarus = ss.str();
+
+    ss.str("I am Groot.");
+    const auto groot = ss.str();
+
+    REQUIRE(lazarus == "By Grabthar's hammer, by the suns of Worvan. You shall be avenged.");
+    REQUIRE(groot == "I am Groot.");
+}
+
+TEST_CASE("istringstream supports construction from a string") {
+    using namespace std;
+    string numbers("1 2.23606 2");
+    istringstream ss{ numbers };
+    int a;
+    float b, c, d;
+    ss >> a;
+    ss >> b;
+    ss >> c;
+    REQUIRE(a == 1);
+    REQUIRE(b == Approx(2.23606));
+    REQUIRE(c == Approx(2));
+    REQUIRE_FALSE(ss >> d);
+}
+
+TEST_CASE("stringstream supports all strings stream operations") {
+    using namespace std;
+    stringstream ss;
+    ss << "Zed's DEAD";
+
+    string who;
+    ss >> who;
+    int what;
+    ss >> hex >> what;
+
+    REQUIRE(who == "Zed's");
+    REQUIRE(what == 0xdead);
 }
