@@ -1,13 +1,14 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 #include <sstream>
+#include <fstream>
 #include <string>
 #include <bitset>
 #include <iomanip>
 
+using namespace std;
 
 TEST_CASE("cout (as ostringstream) global output stream") {
-    using namespace std;
     bitset<8> s{ "01110011" };
     string str("Crying zeros and I'm hearing");
     size_t num{ 111 };
@@ -17,7 +18,6 @@ TEST_CASE("cout (as ostringstream) global output stream") {
 }
 
 TEST_CASE("cin (as istringstream) global input stream") {
-    using namespace std;
     double x, y;
     istringstream is;
     is.str("10 5 *");
@@ -54,7 +54,6 @@ TEST_CASE("cin (as istringstream) global input stream") {
 }
 
 TEST_CASE("cin (as istringstream) word count") {
-    using namespace std;
     istringstream is;
     is.str("one two three four five six seven eight");
     std::string word;
@@ -68,7 +67,6 @@ TEST_CASE("cin (as istringstream) word count") {
 }
 
 TEST_CASE("stream exceptions") {
-    using namespace std;
     ostringstream os;
     istringstream is;
     is.str("one two three four five six seven eight");
@@ -86,7 +84,6 @@ TEST_CASE("stream exceptions") {
 }
 
 TEST_CASE("stream manipulators") {
-    using namespace std;
     ostringstream os;
     os << "Gotham needs its " << boolalpha << true << " hero.";
     os << "\nMark it " << noboolalpha << false << "!";
@@ -114,7 +111,6 @@ std::ostream& operator<<(std::ostream& s, std::vector<T> v) {
 }
 
 TEST_CASE("user-defined types on ostream") {
-    using namespace std;
     const vector<string> characters {
         "Bobby Shaftoe",
         "Lawrence Waterhouse",
@@ -138,7 +134,6 @@ std::istream& operator>>(std::istream& s, std::deque<T>& t) {
 }
 
 TEST_CASE("user-defined types on istream") {
-    using namespace std;
     deque<int> numbers;
     istringstream is;
     is.str("1 2 3 4 5");
@@ -154,7 +149,6 @@ TEST_CASE("user-defined types on istream") {
 }
 
 TEST_CASE("ostringstream produces strings with str") {
-    using namespace std;
     ostringstream ss;
     ss << "By Grabthar's hammer, ";
     ss << "by the suns of Worvan. ";
@@ -169,7 +163,6 @@ TEST_CASE("ostringstream produces strings with str") {
 }
 
 TEST_CASE("istringstream supports construction from a string") {
-    using namespace std;
     string numbers("1 2.23606 2");
     istringstream ss{ numbers };
     int a;
@@ -184,7 +177,6 @@ TEST_CASE("istringstream supports construction from a string") {
 }
 
 TEST_CASE("stringstream supports all strings stream operations") {
-    using namespace std;
     stringstream ss;
     ss << "Zed's DEAD";
 
