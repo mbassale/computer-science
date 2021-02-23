@@ -1,7 +1,7 @@
 /**
  * Variable Example.
  */
-package cl.mbassale;
+package cl.mbassale.ch1;
 
 class Test1 {
     public static void main(String[] args) {

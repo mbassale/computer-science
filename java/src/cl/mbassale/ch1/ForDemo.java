@@ -1,4 +1,4 @@
-package cl.mbassale;
+package cl.mbassale.ch1;
 
 public class ForDemo {
     public static void main(String[] args) {

@@ -1,7 +1,7 @@
 /**
  * Converts gallons to liters.
  */
-package cl.mbassale;
+package cl.mbassale.ch1;
 
 public class GalToLit {
     public static void main(String[] args) {

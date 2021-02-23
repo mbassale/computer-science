@@ -1,7 +1,7 @@
 /**
  * Simple Java Program
  */
-package cl.mbassale;
+package cl.mbassale.ch1;
 
 class Test0 {
     public static void main(String[] args) {

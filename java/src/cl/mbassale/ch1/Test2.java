@@ -1,7 +1,7 @@
 /**
  * Differences between int and double.
  */
-package cl.mbassale;
+package cl.mbassale.ch1;
 
 class Test2 {
     public static void main(String[] args) {
