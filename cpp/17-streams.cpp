@@ -188,3 +188,43 @@ TEST_CASE("stringstream supports all strings stream operations") {
     REQUIRE(who == "Zed's");
     REQUIRE(what == 0xdead);
 }
+
+TEST_CASE("read & write to file") {
+    {
+        ofstream file{"numbers.txt", ios::out | ios::app};
+        REQUIRE(file.is_open());
+        vector<int> numbers{
+                -54,
+                203,
+                9000,
+                0,
+                99,
+                -789,
+                400
+        };
+        for (const auto &number : numbers) {
+            file << number << endl;
+        }
+        file.close();
+        REQUIRE_FALSE(file.is_open());
+    }
+    ifstream file{ "numbers.txt" };
+    REQUIRE(file.is_open());
+    auto maximum = numeric_limits<int>::min();
+    int value;
+    while (file >> value) maximum = std::max(maximum, value);
+    REQUIRE(maximum == 9000);
+    file.close();
+    REQUIRE_FALSE(file.is_open());
+}
+
+ifstream open(const char* path, ios_base::openmode mode = ios::ios_base::in) {
+    ifstream file{ path, mode };
+    if (!file.is_open()) {
+        string err{ "Uname to open file " };
+        err.append(path);
+        throw runtime_error{ err };
+    }
+    file.exceptions(ifstream::badbit);
+    return file;
+}
