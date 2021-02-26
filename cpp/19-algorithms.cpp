@@ -131,3 +131,104 @@ TEST_CASE("find_first_of") {
                                                     indefinite_articles.cbegin(), indefinite_articles.cend());
     REQUIRE(*find_first_of_result == words[2]);
 }
+
+/**
+ * Find adjacent elements that are equal or match predicate. Returns the first repeat.
+ * Running time: O(n)
+ */
+TEST_CASE("adjacent_find") {
+    vector<string> words{ "Icabod", "is", "itchy" };
+    const auto first_letters_match = [](const auto& word1, const auto& word2) {
+        if (word1.empty() || word2.empty()) return false;
+        return word1.front() == word2.front();
+    };
+    const auto adjacent_find_result = adjacent_find(words.cbegin(), words.cend(), first_letters_match);
+    REQUIRE(*adjacent_find_result == words[1]);
+}
+
+/**
+ * Count elements that match some criteria.
+ * Running time: O(n)
+ */
+TEST_CASE("count") {
+    vector<string> words{ "jelly", "jar", "and", "jam" };
+    const auto n_ands = count(words.cbegin(), words.cend(), "and");
+    REQUIRE(n_ands == 1);
+
+    const auto contains_a = [](const auto& word) {
+        return word.find('a') != string::npos;
+    };
+    const auto count_if_result = count_if(words.cbegin(), words.cend(), contains_a);
+    REQUIRE(count_if_result == 3);
+}
+
+/**
+ * Find the first mismatch between two sequences.
+ * Running time: O(n)
+ */
+TEST_CASE("mismatch") {
+    vector<string> words1{ "Kitten", "Kangaroo", "Kick" };
+    vector<string> words2{ "Kitten", "bandicoot", "roundhouse" };
+    const auto mismatch_result1 = mismatch(words1.cbegin(), words1.cend(), words2.cbegin());
+    REQUIRE(*mismatch_result1.first == "Kangaroo");
+    REQUIRE(*mismatch_result1.second == "bandicoot");
+
+    const auto second_letter_matches = [](const auto& word1, const auto& word2) {
+        if (word1.size() < 2 || word2.size() < 2) return false;
+        return word1[1] == word2[1];
+    };
+    const auto mismatch_result2 = mismatch(words1.cbegin(), words1.cend(), words2.cbegin(), second_letter_matches);
+    REQUIRE(*mismatch_result2.first == "Kick");
+    REQUIRE(*mismatch_result2.second == "roundhouse");
+}
+
+/**
+ * Determines if two sequences are equal.
+ * Running time: O(n)
+ */
+TEST_CASE("equal") {
+    vector<string> words1{ "Lazy", "lion", "licks" };
+    vector<string> words2{ "Lazy", "lion", "kicks" };
+    const auto equal_result1 = equal(words1.cbegin(), words1.cend(), words2.cbegin());
+    REQUIRE_FALSE(equal_result1);
+
+    words2[2] = words1[2];
+    const auto equal_result2 = equal(words1.cbegin(), words1.cend(), words2.cbegin());
+    REQUIRE(equal_result2);
+}
+
+/**
+ * Determines if elements of two sequences are equal, but in different order.
+ * Running time: O(n^2)
+ */
+TEST_CASE("is_permutation") {
+    vector<string> words1{ "moonlight", "mighty", "nice" };
+    vector<string> words2{ "nice", "moonlight", "mighty" };
+    const auto result = is_permutation(words1.cbegin(), words1.cend(), words2.cbegin());
+    REQUIRE(result);
+}
+
+/**
+ * Locates a subsequence, returns an iterator pointing to the first element of the first sequence.
+ * Running time: O(n^2)
+ */
+TEST_CASE("search") {
+    vector<string> words1{ "Nine", "new", "neckties", "and", "a", "nightshirt" };
+    vector<string> words2{ "and", "a", "nightshirt" };
+    const auto search_result_1 = search(words1.cbegin(), words1.cend(), words2.cbegin(), words2.cend());
+    REQUIRE(*search_result_1 == "and");
+
+    vector<string> words3{ "and", "a", "nightpant" };
+    const auto search_result_2 = search(words1.cbegin(), words1.cend(), words3.cbegin(), words3.cend());
+    REQUIRE(search_result_2 == words1.cend());
+}
+
+/**
+ * Locates a subsequence, containing identical, consecutive values.
+ * Running time: O(n)
+ */
+TEST_CASE("search_n") {
+    vector<string> words{ "an", "orange", "owl", "owl", "owl", "today" };
+    const auto result = search_n(words.cbegin(), words.cend(), 3, "owl");
+    REQUIRE(result == words.cbegin() + 2);
+}
