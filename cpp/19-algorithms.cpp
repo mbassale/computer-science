@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <boost/algorithm/string/case_conv.hpp>
+
 
 using namespace std;
 
@@ -231,4 +233,119 @@ TEST_CASE("search_n") {
     vector<string> words{ "an", "orange", "owl", "owl", "owl", "today" };
     const auto result = search_n(words.cbegin(), words.cend(), 3, "owl");
     REQUIRE(result == words.cbegin() + 2);
+}
+
+/**
+ * Copy a sequence into other.
+ * Running time: O(n)
+ */
+TEST_CASE("copy") {
+    vector<string> words1{ "and", "prosper" };
+    vector<string> words2{ "Live", "long" };
+    copy(words1.cbegin(), words1.cend(), back_inserter(words2));
+    REQUIRE(words2 == vector<string>{ "Live", "long", "and", "prosper" });
+}
+
+/**
+ * Copy a sequence into other upto n elements.
+ * Running time: O(n)
+ */
+TEST_CASE("copy_n") {
+    vector<string> words1{ "on", "the", "wind" };
+    vector<string> words2{ "I'm", "a", "leaf" };
+    copy_n(words1.cbegin(), words1.size(), back_inserter(words2));
+    REQUIRE(words2 == vector<string>{ "I'm", "a", "leaf", "on", "the", "wind" });
+}
+
+/**
+ * Copy the reverse of one sequence into another.
+ * Running time: O(n)
+ */
+TEST_CASE("copy_backward") {
+    vector<string> words1{ "A", "man", "a", "plan", "a", "bran", "muffin" };
+    vector<string> words2{ "a", "canal", "Panama" };
+    const auto result = copy_backward(words2.cbegin(), words2.cend(), words1.end());
+    REQUIRE(words1 == vector<string>{ "A", "man", "a", "plan", "a", "canal", "Panama" });
+}
+
+struct MoveDetector {
+    MoveDetector() : owner{ true } {}
+    MoveDetector(const MoveDetector&) = delete;
+    MoveDetector& operator=(const MoveDetector&) = delete;
+    MoveDetector(MoveDetector&& o) = delete;
+    MoveDetector& operator=(MoveDetector&& o) noexcept {
+        o.owner = false;
+        owner = true;
+        return *this;
+    }
+    explicit operator bool() const { return owner; }
+    bool owner;
+};
+
+/**
+ * Move elements from first sequence into second sequence. Elements must be moveable.
+ * Running time: O(n)
+ */
+TEST_CASE("move") {
+    vector<MoveDetector> detectors1(2);
+    vector<MoveDetector> detectors2(2);
+    move(detectors1.begin(), detectors1.end(), detectors2.begin());
+    REQUIRE_FALSE(detectors1[0]);
+    REQUIRE_FALSE(detectors1[1]);
+    REQUIRE(detectors2[0]);
+    REQUIRE(detectors2[1]);
+}
+
+/**
+ * Move the reverse of one sequence into another.
+ * Running time: O(n)
+ */
+TEST_CASE("move_backward") {
+    vector<MoveDetector> detectors1(2);
+    vector<MoveDetector> detectors2(2);
+    move_backward(detectors1.begin(), detectors1.end(), detectors2.begin());
+    REQUIRE_FALSE(detectors1[0]);
+    REQUIRE_FALSE(detectors1[1]);
+    REQUIRE(detectors2[0]);
+    REQUIRE(detectors2[1]);
+}
+
+/**
+ * Swap elements from one sequence into another.
+ * Running time: O(n)
+ */
+TEST_CASE("swap_ranges") {
+    vector<string> words1{ "The", "king", "is", "dead" };
+    vector<string> words2{ "Long", "live", "the", "king." };
+    swap_ranges(words1.begin(), words1.end(), words2.begin());
+    REQUIRE(words1 == vector<string>{ "Long", "live", "the", "king." });
+    REQUIRE(words2 == vector<string>{ "The", "king", "is", "dead" });
+}
+
+/**
+ * Transforms elements in a sequence according to unary or binary operations.
+ * Running time: O(n)
+ */
+TEST_CASE("transform") {
+    vector<string> words1{ "farewell", "hello", "farewell", "hello" };
+    vector<string> result1;
+    auto upper = [](string x) {
+        boost::algorithm::to_upper(x);
+        return x;
+    };
+    transform(words1.begin(), words1.end(), back_inserter(result1), upper);
+    REQUIRE(result1 == vector<string>{ "FAREWELL", "HELLO", "FAREWELL", "HELLO" });
+
+    vector<string> words2{ "light", "human", "bro", "quantum" };
+    vector<string> words3{ "radar", "robot", "pony", "bit" };
+    vector<string> result2;
+    auto portmantize = [](const auto &x, const auto &y) {
+        const auto x_letters = min(size_t{ 2 }, x.size());
+        string result{ x.begin(), x.begin() + x_letters };
+        const auto y_letters = min(size_t{3}, y.size());
+        result.insert(result.end(), y.end() - y_letters, y.end());
+        return result;
+    };
+    transform(words2.begin(), words2.end(), words3.begin(), back_inserter(result2), portmantize);
+    REQUIRE(result2 == vector<string>{ "lidar", "hubot", "brony", "qubit" });
 }
