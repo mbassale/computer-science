@@ -2,6 +2,8 @@
 #include "catch.hpp"
 #include <vector>
 #include <string>
+#include <map>
+#include <random>
 #include <algorithm>
 #include <boost/algorithm/string/case_conv.hpp>
 
@@ -348,4 +350,147 @@ TEST_CASE("transform") {
     };
     transform(words2.begin(), words2.end(), words3.begin(), back_inserter(result2), portmantize);
     REQUIRE(result2 == vector<string>{ "lidar", "hubot", "brony", "qubit" });
+}
+
+/**
+ * Replaces certain elements in a sequence with some new element.
+ * Running time: O(n)
+ */
+TEST_CASE("replace") {
+    using namespace std::literals;
+    vector<string> words1{ "There", "is", "no", "try" };
+    replace(words1.begin(), words1.end(), "try"sv, "spoon"sv);
+    REQUIRE(words1 == vector<string>{ "There", "is", "no", "spoon" });
+
+    const vector<string> words2{ "There", "is", "no", "spoon" };
+    vector<string> words3{ "There", "is", "no", "spoon" };
+    auto has_two_os = [](const auto& x) {
+        return count(x.begin(), x.end(), 'o') == 2;
+    };
+    replace_copy_if(words2.begin(), words2.end(), words3.begin(), has_two_os, "try"sv);
+    REQUIRE(words3 == vector<string>{ "There", "is", "no", "try" });
+}
+
+/**
+ * Fills a sequence with some value.
+ * Running time: O(n)
+ */
+TEST_CASE("fill") {
+    vector<string> answer1(6);
+    fill(answer1.begin(), answer1.end(), "police");
+    REQUIRE(answer1 == vector<string>{ "police", "police", "police",
+                                       "police", "police", "police" });
+
+    vector<string> answer2;
+    fill_n(back_inserter(answer2), 6, "police");
+    REQUIRE(answer2 == vector<string>{ "police", "police", "police",
+                                       "police", "police", "police" });
+}
+
+/**
+ * Fills a sequence by invoking a function object.
+ * Running time: O(n)
+ */
+TEST_CASE("generate") {
+    auto i{ 1 };
+    auto pow_of_2 = [&i]() {
+        const auto tmp = i;
+        i *= 2;
+        return tmp;
+    };
+    vector<int> series1(6);
+    generate(series1.begin(), series1.end(), pow_of_2);
+    REQUIRE(series1 == vector<int>{ 1, 2, 4, 8, 16, 32 });
+
+    vector<int> series2;
+    generate_n(back_inserter(series2), 6, pow_of_2);
+    REQUIRE(series2 == vector<int>{ 64, 128, 256, 512, 1024, 2048 });
+}
+
+/**
+ * Removes elements from a sequence.
+ * Running time: O(n)
+ */
+TEST_CASE("remove") {
+    auto is_vowel = [](char x) {
+        const static string vowels{ "aeiouAEIOU" };
+        return vowels.find(x) != string::npos;
+    };
+    string pilgrim = "Among the things Billy Pilgrim could not change "
+                     "were the past, the present, and the future.";
+    const auto new_end = remove_if(pilgrim.begin(), pilgrim.end(), is_vowel);
+    REQUIRE(pilgrim == "mng th thngs Blly Plgrm cld nt chng wr th pst, th prsnt, nd th ftr.present, and the future.");
+    pilgrim.erase(new_end, pilgrim.end());
+    REQUIRE(pilgrim == "mng th thngs Blly Plgrm cld nt chng wr th pst, th prsnt, nd th ftr.");
+}
+
+/**
+ * Remove repeated elements. Tests equality or an optional predicate.
+ * Running time: O(n)
+ */
+TEST_CASE("unique") {
+    string without_walls = "Wallless";
+    const auto new_end = unique(without_walls.begin(), without_walls.end());
+    without_walls.erase(new_end, without_walls.end());
+    REQUIRE(without_walls == "Wales");
+}
+
+/**
+ * Reverses the order of a sequence.
+ * Running time: O(n)
+ */
+TEST_CASE("reverse") {
+    string stinky = "diaper";
+    reverse(stinky.begin(), stinky.end());
+    REQUIRE(stinky == "repaid");
+}
+
+/**
+ * Sample a new sequence from a population with uniform distribution.
+ * Running time: O(n)
+ */
+TEST_CASE("sample") {
+    const string population = "ABCD";
+    const size_t n_samples{ 1'000'000 };
+    mt19937_64 urbg;
+
+    const auto sample_length = [&population, &urbg](size_t n) {
+        map<string, size_t> counts;
+        for (size_t i{}; i < n_samples; i++) {
+            string result;
+            sample(population.begin(), population.end(), back_inserter(result), n, urbg);
+            counts[result]++;
+        }
+
+        for (const auto&[sample, sample_count] : counts) {
+            const auto percentage = 100.0 * sample_count / static_cast<double>(n_samples);
+            REQUIRE(sample.length() == n);
+            REQUIRE(percentage > 0);
+        }
+    };
+
+    for (auto n = 0; n < 5; n++) {
+        sample_length(n);
+    }
+}
+
+/**
+ * Generates a random permutation from a sequence.
+ * Running time: O(n)
+ */
+TEST_CASE("shuffle") {
+    const string population = "ABCD";
+    const size_t n_samples{ 1'000'000 };
+    mt19937_64 urbg;
+    map<string, size_t> samples;
+    for (size_t i{}; i < n_samples; i++) {
+        string result{ population };
+        shuffle(result.begin(), result.end(), urbg);
+        samples[result]++;
+    }
+    for (const auto&[sample, n] : samples) {
+        const auto percentage = 100.0 * n / n_samples;
+        REQUIRE(sample.length() == population.length());
+        REQUIRE(percentage > 0);
+    }
 }
