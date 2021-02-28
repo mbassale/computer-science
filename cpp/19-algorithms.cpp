@@ -494,3 +494,135 @@ TEST_CASE("shuffle") {
         REQUIRE(percentage > 0);
     }
 }
+
+/**
+ * Sorts elements of a sequence using less than operator or a functor object.
+ * Running time: O(n*log(n))
+ */
+TEST_CASE("sort") {
+    string goat_grass{ "spoilage" };
+    sort(goat_grass.begin(), goat_grass.end());
+    REQUIRE(goat_grass == "aegilops");
+}
+
+enum class CharCategory {
+    Ascender,
+    Normal,
+    Descender
+};
+
+CharCategory categorize(char x) {
+    switch(x) {
+        case 'g':
+        case 'j':
+        case 'p':
+        case 'q':
+        case 'y':
+            return CharCategory::Descender;
+        case 'b':
+        case 'd':
+        case 'f':
+        case 'h':
+        case 'k':
+        case 'l':
+        case 't':
+            return CharCategory::Ascender;
+        default:
+            return CharCategory::Normal;
+    }
+}
+
+bool ascension_compare(char x, char y) {
+    return categorize(x) < categorize(y);
+}
+
+/**
+ * Stable element sort.
+ * Running time: O(n*(log(n))^2)
+ */
+TEST_CASE("stable_sort") {
+    string word{ "outgrin" };
+    stable_sort(word.begin(), word.end(), ascension_compare);
+    REQUIRE(word == "touring");
+}
+
+/**
+ * Partially sorts a sequence.
+ * Running time: O(n*log(n))
+ */
+TEST_CASE("partial_sort") {
+    string word1{ "nectarous" };
+    partial_sort(word1.begin(), word1.begin() + 4, word1.end());
+    REQUIRE(word1 == "acentrous");
+
+    string word2{ "pretanning" };
+    partial_sort(word2.begin(), word2.begin() + 3, word2.end(), ascension_compare);
+    REQUIRE(word2 == "terpanning");
+}
+
+/**
+ * Determines if the sequence is sorted.
+ * Running time: O(n)
+ */
+TEST_CASE("is_sorted") {
+    string word1{ "billowy" };
+    REQUIRE(is_sorted(word1.begin(), word1.end()));
+
+    string word2{ "floppy" };
+    REQUIRE(word2.end() == is_sorted_until(word2.begin(), word2.end(), ascension_compare));
+}
+
+/**
+ * Places an element in its sorted position in a sequence.
+ * Running time: O(n)
+ */
+TEST_CASE("nth_element") {
+    vector<int> numbers{ 1, 9, 2, 8, 3, 7, 4, 6, 5 };
+    nth_element(numbers.begin(), numbers.begin() + 5, numbers.end());
+    auto less_than_6th_element = [&elem=numbers[5]](int x) {
+        return x < elem;
+    };
+    REQUIRE(all_of(numbers.begin(), numbers.begin() + 5, less_than_6th_element));
+    REQUIRE(numbers[5] == 6);
+}
+
+/**
+ * Finds a partition where all elements are less than the specified value.
+ * Running time: O(log(n))
+ */
+TEST_CASE("lower_bound") {
+    vector<int> numbers{ 2, 4, 5, 6, 6, 9 };
+    const auto result = lower_bound(numbers.begin(), numbers.end(), 5);
+    REQUIRE(result == numbers.begin() + 2);
+}
+
+/**
+ * Finds a partition where all elements are greater than the specified value.
+ * Running time: O(log(n))
+ */
+TEST_CASE("upper_bound") {
+    vector<int> numbers{ 2, 4, 5, 6, 6, 9 };
+    const auto result = upper_bound(numbers.begin(), numbers.end(), 5);
+    REQUIRE(result == numbers.begin() + 3);
+}
+
+/**
+ * Finds an open-ended range of elements equal to the specified value in the sequence.
+ * Running time: O(log(n))
+ */
+TEST_CASE("equal_range") {
+    vector<int> numbers{ 2, 4, 5, 6, 6, 9 };
+    const auto[rbeg, rend] = equal_range(numbers.begin(), numbers.end(), 6);
+    REQUIRE(rbeg == numbers.begin() + 3);
+    REQUIRE(rend == numbers.begin() + 5);
+}
+
+/**
+ * Finds an specified element in a sorted sequence.
+ * Running time: O(log(n))
+ */
+TEST_CASE("binary_search") {
+    vector<int> numbers{ 2, 4, 5, 6, 6, 9 };
+    REQUIRE(binary_search(numbers.begin(), numbers.end(), 6));
+    REQUIRE_FALSE(binary_search(numbers.begin(), numbers.end(), 7));
+}
