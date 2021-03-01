@@ -626,3 +626,52 @@ TEST_CASE("binary_search") {
     REQUIRE(binary_search(numbers.begin(), numbers.end(), 6));
     REQUIRE_FALSE(binary_search(numbers.begin(), numbers.end(), 7));
 }
+
+/**
+ * Returns true if all elements before in which predicate is true, appear before the other elements.
+ * Running time: O(n)
+ */
+TEST_CASE("is_partitioned") {
+    auto is_odd = [](auto x) { return x % 2 == 1; };
+
+    vector<int> numbers1{ 9, 5, 9, 6, 4, 2 };
+    REQUIRE(is_partitioned(numbers1.begin(), numbers1.end(), is_odd));
+
+    vector<int> numbers2{ 9, 4, 9, 6, 4, 2 };
+    REQUIRE_FALSE(is_partitioned(numbers2.begin(), numbers2.end(), is_odd));
+}
+
+/**
+ * Using a predicate, partitions a sequence in place.
+ * Running time: O(n)
+ */
+TEST_CASE("partition") {
+    auto is_odd = [](auto x) { return x % 2 == 1; };
+    vector<int> numbers { 1, 2, 3, 4, 5 };
+    const auto partition_point = partition(numbers.begin(), numbers.end(), is_odd);
+    REQUIRE(is_partitioned(numbers.begin(), numbers.end(), is_odd));
+    REQUIRE(partition_point == numbers.begin() + 3);
+}
+
+/**
+ * Using a predicate, partitions a sequence, copying elements to two output iterators.
+ * Running time: O(n)
+ */
+TEST_CASE("partition_copy") {
+    auto is_odd = [](auto x) { return x % 2 == 1; };
+    vector<int> numbers{ 1, 2, 3, 4, 5 }, odds, evens;
+    partition_copy(numbers.begin(), numbers.end(), back_inserter(odds), back_inserter(evens), is_odd);
+    REQUIRE(all_of(odds.begin(), odds.end(), is_odd));
+    REQUIRE(none_of(evens.begin(), evens.end(), is_odd));
+}
+
+/**
+ * Partitions a sequence using a predicate. The original ordering of elements is preserved.
+ * Running time: O(n*log(n))
+ */
+TEST_CASE("stable_partition") {
+    auto is_odd = [](auto x) { return x % 2 == 1; };
+    vector<int> numbers{ 1, 2, 3, 4, 5 };
+    stable_partition(numbers.begin(), numbers.end(), is_odd);
+    REQUIRE(numbers == vector<int>{ 1, 3, 5, 2, 4 });
+}
