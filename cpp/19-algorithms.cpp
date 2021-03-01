@@ -1,10 +1,12 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
+#include <array>
 #include <vector>
 #include <string>
 #include <map>
 #include <random>
 #include <algorithm>
+#include <numeric>
 #include <boost/algorithm/string/case_conv.hpp>
 
 
@@ -674,4 +676,135 @@ TEST_CASE("stable_partition") {
     vector<int> numbers{ 1, 2, 3, 4, 5 };
     stable_partition(numbers.begin(), numbers.end(), is_odd);
     REQUIRE(numbers == vector<int>{ 1, 3, 5, 2, 4 });
+}
+
+/**
+ * Merges two sorted sequences.
+ * Running time: O(n)
+ */
+TEST_CASE("merge") {
+    vector<int> numbers1{ 1, 4, 5 }, numbers2{ 2, 3, 3, 6 }, result;
+    merge(numbers1.begin(), numbers1.end(), numbers2.begin(), numbers2.end(), back_inserter(result));
+    REQUIRE(result == vector<int>{ 1, 2, 3, 3, 4, 5, 6 });
+}
+
+/**
+ * Returns minimum and/or maximum.
+ * Running time: O(n) or O(1)
+ */
+TEST_CASE("max and min") {
+    using namespace std::literals;
+    auto length_compare = [](const auto& x1, const auto& x2) {
+        return x1.length() < x2.length();
+    };
+    REQUIRE(min("undiscriminativeness"s, "vermin"s, length_compare) == "vermin");
+    REQUIRE(max("maxim"s, "ultramaximal"s, length_compare) == "ultramaximal");
+
+    const auto result = minmax("minimaxes"s, "maximin"s, length_compare);
+    REQUIRE(result.first == "maximin");
+    REQUIRE(result.second == "minimaxes");
+}
+
+/**
+ * Determines the sequence extreme elements.
+ * Running time: O(n)
+ */
+TEST_CASE("min and max element") {
+    auto length_compare = [](const auto& x1, const auto& x2) {
+        return x1.length() < x2.length();
+    };
+
+    vector<string> words{ "civic", "deed", "kayak", "malayalam" };
+    REQUIRE(*min_element(words.begin(), words.end(), length_compare) == "deed");
+    REQUIRE(*max_element(words.begin(), words.end(), length_compare) == "malayalam");
+
+    const auto result = minmax_element(words.begin(), words.end(), length_compare);
+    REQUIRE(*result.first == "deed");
+    REQUIRE(*result.second == "malayalam");
+}
+
+/**
+ * Bounds a value.
+ * Running time: O(1)
+ */
+TEST_CASE("clamp") {
+    REQUIRE(clamp(9000, 0, 100) == 100);
+    REQUIRE(clamp(-120, 0, 100) == 0);
+    REQUIRE(clamp(3.14, 0., 100.) == Approx(3.14));
+}
+
+/**
+ * Generic operators: plus, minus, multiplies, divides, modulus.
+ */
+TEST_CASE("plus") {
+    plus<short> adder;
+    REQUIRE(3 == adder(1, 2));
+    REQUIRE(3 == plus<short>{}(1, 2));
+}
+
+/**
+ * Generates an increasing sequence using value as increment.
+ * Running time: O(n)
+ */
+TEST_CASE("iota") {
+    array<int, 3> easy_as;
+    iota(easy_as.begin(), easy_as.end(), 1);
+    REQUIRE(easy_as == array<int, 3>{ 1, 2, 3 });
+}
+
+/**
+ * Folds a sequence using a unary operation.
+ * Running time: O(n)
+ */
+TEST_CASE("accumulate") {
+    vector<int> nums{ 1, 2, 3 };
+    const auto result1 = accumulate(nums.begin(), nums.end(), -1);
+    REQUIRE(result1 == 5);
+
+    const auto result2 = accumulate(nums.begin(), nums.end(), 2, multiplies<>());
+    REQUIRE(result2 == 12);
+}
+
+/**
+ * Folds a sequence in custom order.
+ * Running time: O(n)
+ */
+TEST_CASE("reduce") {
+    vector<int> nums{ 1, 2, 3 };
+    const auto result1 = reduce(nums.begin(), nums.end(), -1);
+    REQUIRE(result1 == 5);
+
+    const auto result2 = reduce(nums.begin(), nums.end(), 2, multiplies<>());
+    REQUIRE(result2 == 12);
+}
+
+/**
+ * Calculates the inner (or dot) product between a pair of sequences.
+ * Running time: O(n)
+ */
+TEST_CASE("inner_product") {
+    vector<int> nums1{ 1, 2, 3, 4, 5 };
+    vector<int> nums2{ 1, 0, -1, 0, 1 };
+    const auto result = inner_product(nums1.begin(), nums1.end(), nums2.begin(), 10);
+    REQUIRE(result == 13);
+}
+
+/**
+ * Calculates adjacent differences using a binary operation.
+ * Running time: O(n)
+ */
+TEST_CASE("adjacent_difference") {
+    vector<int> fib{ 1, 1, 2, 3, 5, 8 }, fib_diff;
+    adjacent_difference(fib.begin(), fib.end(), back_inserter(fib_diff));
+    REQUIRE(fib_diff == vector<int>{ 1, 0, 1, 1, 2, 3 });
+}
+
+/**
+ * Calculates partial sums and stores the results in a target sequence.
+ * Running time: O(n)
+ */
+TEST_CASE("partial_sum") {
+    vector<int> num{ 1, 2, 3, 4 }, result;
+    partial_sum(num.begin(), num.end(), back_inserter(result));
+    REQUIRE(result == vector<int>{ 1, 3, 6, 10 });
 }
