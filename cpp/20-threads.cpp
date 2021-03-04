@@ -6,6 +6,8 @@
 #include <set>
 #include <chrono>
 #include <future>
+#include <atomic>
+#include <condition_variable>
 #include <mutex>
 #include <iostream>
 #include <sstream>
@@ -134,22 +136,20 @@ TEST_CASE("factorize long") {
 
 int goat_rodeo() {
     const size_t iterations{ 1'000'000 };
-    int tin_cans_available{};
-    mutex tin_can_mutex;
+    atomic_int tin_cans_available{};
 
     auto eat_cans = async(launch::async, [&] {
         for (size_t i{}; i < iterations; i++) {
-            lock_guard<mutex> guard{ tin_can_mutex };
             tin_cans_available--;
         }
     });
 
     auto deposit_cans = async(launch::async, [&] {
         for (size_t i{}; i < iterations; i++) {
-            lock_guard<mutex> guard{ tin_can_mutex };
             tin_cans_available++;
         }
     });
+
     eat_cans.get();
     deposit_cans.get();
     return tin_cans_available;
