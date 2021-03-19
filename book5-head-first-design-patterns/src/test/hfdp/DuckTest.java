@@ -1,6 +1,8 @@
 package hfdp;
 
 import cl.mbassale.hfdp.ch1.Duck;
+import cl.mbassale.hfdp.ch1.behavior.FlyRocketPowered;
+import cl.mbassale.hfdp.ch1.behavior.QuackRecorded;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,5 +40,19 @@ class DuckTest {
     @Test
     void fly() {
         assertDoesNotThrow(() -> duck.fly());
+    }
+
+    @Test
+    void setFlyBehavior() {
+        assertDoesNotThrow(() -> duck.fly());
+        duck.setFlyBehavior(new FlyRocketPowered());
+        assertDoesNotThrow(() -> duck.fly());
+    }
+
+    @Test
+    void setQuackBehavior() {
+        assertDoesNotThrow(() -> duck.quack());
+        duck.setQuackBehavior(new QuackRecorded());
+        assertDoesNotThrow(() -> duck.quack());
     }
 }
