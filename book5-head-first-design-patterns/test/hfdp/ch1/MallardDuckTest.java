@@ -1,19 +1,19 @@
-package hfdp;
+package hfdp.ch1;
 
 import cl.mbassale.hfdp.ch1.Duck;
-import cl.mbassale.hfdp.ch1.RubberDuck;
+import cl.mbassale.hfdp.ch1.MallardDuck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-class RubberDuckTest {
+class MallardDuckTest {
 
-    Duck duck;
+    private Duck duck;
 
     @BeforeEach
     void setUp() {
-        duck = new RubberDuck();
+        duck = new MallardDuck();
     }
 
     @Test

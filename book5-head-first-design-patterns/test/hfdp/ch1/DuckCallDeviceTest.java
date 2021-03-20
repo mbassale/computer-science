@@ -1,4 +1,4 @@
-package hfdp;
+package hfdp.ch1;
 
 import cl.mbassale.hfdp.ch1.DuckCallDevice;
 import org.junit.jupiter.api.BeforeEach;

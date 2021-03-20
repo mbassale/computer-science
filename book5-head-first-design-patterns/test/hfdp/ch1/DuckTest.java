@@ -1,4 +1,4 @@
-package hfdp;
+package hfdp.ch1;
 
 import cl.mbassale.hfdp.ch1.Duck;
 import cl.mbassale.hfdp.ch1.behavior.FlyRocketPowered;
