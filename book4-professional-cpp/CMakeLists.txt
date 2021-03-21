@@ -7,6 +7,8 @@ SET(SOURCES
         main.cpp
         ch1/01-string_view.cpp
         ch7/01-new-delete.cpp
-        ch7/02-smart-pointers.cpp)
+        ch7/02-smart-pointers.cpp
+        ch8/SpreadsheetCell.cpp
+        ch8/SpreadsheetCell.h ch8/test_spreadsheet_cell.cpp)
 
 add_executable(book4_professional_cpp ${SOURCES})
