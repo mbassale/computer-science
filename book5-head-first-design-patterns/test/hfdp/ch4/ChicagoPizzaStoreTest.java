@@ -1,7 +1,7 @@
 package hfdp.ch4;
 
+import cl.mbassale.hfdp.ch4.CheesePizza;
 import cl.mbassale.hfdp.ch4.ChicagoPizzaStore;
-import cl.mbassale.hfdp.ch4.ChicagoStyleCheesePizza;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +18,6 @@ class ChicagoPizzaStoreTest {
 
     @Test
     void createPizza() {
-        assertTrue(chicagoPizzaStore.orderPizza("cheese") instanceof ChicagoStyleCheesePizza);
+        assertTrue(chicagoPizzaStore.orderPizza("cheese") instanceof CheesePizza);
     }
 }

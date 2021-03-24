@@ -1,23 +1,20 @@
 package cl.mbassale.hfdp.ch4;
 
-import java.util.ArrayList;
-import java.util.List;
+import cl.mbassale.hfdp.ch4.ingredients.*;
+
+import java.util.Arrays;
 
 public abstract class Pizza {
 
     String name;
-    String dough;
-    String sauce;
-    List<String> toppings = new ArrayList<String>();
+    Dough dough;
+    Sauce sauce;
+    Veggies[] veggies;
+    Cheese cheese;
+    Pepperoni pepperoni;
+    Clams clams;
 
-    public void prepare() {
-        System.out.println("Preparing " + name);
-        System.out.println("Tossing dough: " + dough);
-        System.out.println("Adding sauce: " + sauce);
-        System.out.println("Adding toppings:");
-        for (String topping : toppings)
-            System.out.println("    " + topping);
-    }
+    public abstract void prepare();
 
     public void bake() {
         System.out.println("Bake for 25 minutes at 350");
@@ -29,5 +26,26 @@ public abstract class Pizza {
 
     public void box() {
         System.out.println("Place pizza in official PizzaStore box");
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Pizza{" +
+                "name='" + name + '\'' +
+                ", dough=" + dough +
+                ", sauce=" + sauce +
+                ", veggies=" + Arrays.toString(veggies) +
+                ", cheese=" + cheese +
+                ", pepperoni=" + pepperoni +
+                ", clams=" + clams +
+                '}';
     }
 }

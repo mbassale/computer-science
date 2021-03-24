@@ -1,23 +1,21 @@
 package cl.mbassale.hfdp.ch4;
 
+import cl.mbassale.hfdp.ch4.ingredients.PizzaIngredientFactory;
+
 public class ClamPizza extends Pizza {
+
+    PizzaIngredientFactory ingredientFactory;
+
+    public ClamPizza(PizzaIngredientFactory ingredientFactory){
+        this.ingredientFactory = ingredientFactory;
+    }
+
     @Override
     public void prepare() {
-
-    }
-
-    @Override
-    public void bake() {
-
-    }
-
-    @Override
-    public void cut() {
-
-    }
-
-    @Override
-    public void box() {
-
+        System.out.println("Preparing " + name);
+        dough = ingredientFactory.createDough();
+        sauce = ingredientFactory.createSauce();
+        cheese = ingredientFactory.createCheese();
+        clams = ingredientFactory.createClam();
     }
 }
