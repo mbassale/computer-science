@@ -11,13 +11,13 @@ TEST_CASE("SpreadsheetCell - construct", "[chapter8]") {
 
 TEST_CASE("SpreadsheetCell - string value", "[chapter8]") {
     SpreadsheetCell spreadsheet_cell;
-    spreadsheet_cell.set_string("60.0");
+    spreadsheet_cell.set("60.0");
     REQUIRE(spreadsheet_cell.get_value() == Approx(60));
 }
 
 TEST_CASE("SpreadsheetCell - ostream printing", "[chapter8]") {
     SpreadsheetCell spreadsheet_cell;
-    spreadsheet_cell.set_value(60);
+    spreadsheet_cell.set(60);
     std::ostringstream ss;
     ss << spreadsheet_cell;
     REQUIRE(ss.str() == "60.000000");
