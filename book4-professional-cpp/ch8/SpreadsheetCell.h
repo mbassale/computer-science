@@ -26,6 +26,8 @@ public:
 
     SpreadsheetCell& operator=(const SpreadsheetCell& rhs);
 
+    SpreadsheetCell& operator+=(const SpreadsheetCell& rhs);
+
     void set(double new_value);
 
     void set(int new_value) = delete;
@@ -40,6 +42,8 @@ public:
 
     [[nodiscard]] Color get_color() const;
 
+    SpreadsheetCell add(const SpreadsheetCell& cell) const;
+
 private:
     double value{};
     mutable size_t num_accesses = 0;
@@ -48,7 +52,13 @@ private:
     [[nodiscard]] static std::string double_to_string(double double_value);
 
     [[nodiscard]] static double string_to_double(std::string_view str_value);
+
+    friend SpreadsheetCell operator+(const SpreadsheetCell& lhs, std::string_view str_value);
 };
+
+SpreadsheetCell operator+(const SpreadsheetCell& lhs, const SpreadsheetCell& rhs);
+SpreadsheetCell operator+(const SpreadsheetCell& lhs, double double_value);
+SpreadsheetCell operator+(const SpreadsheetCell& lhs, std::string_view str_value);
 
 std::ostream& operator<<(std::ostream& out, const SpreadsheetCell& cell);
 
