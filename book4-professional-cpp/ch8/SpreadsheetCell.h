@@ -23,6 +23,7 @@ public:
     SpreadsheetCell& operator=(const SpreadsheetCell& rhs);
 
     void set(double new_value);
+    void set(int new_value) = delete;
 
     void set(std::string_view new_string);
 
