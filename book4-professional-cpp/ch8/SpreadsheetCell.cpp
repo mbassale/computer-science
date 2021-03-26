@@ -19,10 +19,12 @@ void SpreadsheetCell::set_value(double new_value) {
 }
 
 double SpreadsheetCell::get_value() const {
+    num_accesses++;
     return value;
 }
 
 void SpreadsheetCell::set_string(std::string_view new_string) {
+    num_accesses++;
     value = string_to_double(new_string);
 }
 

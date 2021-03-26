@@ -31,6 +31,7 @@ public:
 
 private:
     double value{};
+    mutable size_t num_accesses = 0;
 
     [[nodiscard]] static std::string double_to_string(double double_value) ;
 
