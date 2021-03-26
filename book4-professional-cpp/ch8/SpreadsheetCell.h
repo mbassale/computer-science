@@ -32,9 +32,9 @@ public:
 private:
     double value{};
 
-    [[nodiscard]] std::string double_to_string(double double_value) const;
+    [[nodiscard]] static std::string double_to_string(double double_value) ;
 
-    [[nodiscard]] double string_to_double(std::string_view str_value) const;
+    [[nodiscard]] static double string_to_double(std::string_view str_value) ;
 };
 
 std::ostream &operator<<(std::ostream &out, const SpreadsheetCell &cell);

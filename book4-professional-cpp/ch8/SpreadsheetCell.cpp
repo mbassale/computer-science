@@ -30,11 +30,11 @@ std::string SpreadsheetCell::get_string() const {
     return double_to_string(value);
 }
 
-std::string SpreadsheetCell::double_to_string(double double_value) const {
+std::string SpreadsheetCell::double_to_string(double double_value) {
     return std::to_string(double_value);
 }
 
-double SpreadsheetCell::string_to_double(std::string_view str_value) const {
+double SpreadsheetCell::string_to_double(std::string_view str_value) {
     return std::strtod(str_value.data(), nullptr);
 }
 
