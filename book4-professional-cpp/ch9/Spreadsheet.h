@@ -26,6 +26,7 @@ namespace Chapter9 {
         void setCellAt(size_t x, size_t y, const SpreadsheetCell& cell);
 
         SpreadsheetCell& getCellAt(size_t x, size_t y);
+        [[nodiscard]] const SpreadsheetCell& getCellAt(size_t x, size_t y) const;
 
         friend void swap(Spreadsheet& first, Spreadsheet& second) noexcept;
 

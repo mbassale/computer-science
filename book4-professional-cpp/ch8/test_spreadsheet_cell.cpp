@@ -17,7 +17,7 @@ TEST_CASE("SpreadsheetCell - string value", "[chapter8]") {
 
 TEST_CASE("SpreadsheetCell - ostream printing", "[chapter8]") {
     SpreadsheetCell spreadsheet_cell;
-    spreadsheet_cell.set(60);
+    spreadsheet_cell.set(60.0);
     std::ostringstream ss;
     ss << spreadsheet_cell;
     REQUIRE(ss.str() == "60.000000");
