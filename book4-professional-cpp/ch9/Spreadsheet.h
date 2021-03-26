@@ -7,6 +7,7 @@
 
 #include <utility>
 #include "../ch8/SpreadsheetCell.h"
+#include "SpreadsheetApplication.h"
 
 namespace Chapter9 {
     class Spreadsheet {
@@ -35,10 +36,11 @@ namespace Chapter9 {
 
     private:
         Spreadsheet()
-                :id{++spreadsheet_counter} { };
+                :id{++spreadsheet_counter}, app{SpreadsheetApplication::get_instance()} { };
 
         void verify_coordinate(size_t x, size_t y) const;
 
+        SpreadsheetApplication& app;
         static inline size_t spreadsheet_counter;
         const size_t id;
         size_t width = 0;

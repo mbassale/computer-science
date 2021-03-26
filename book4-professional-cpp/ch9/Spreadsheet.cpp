@@ -20,7 +20,7 @@ namespace Chapter9 {
     }
 
     Spreadsheet::Spreadsheet(size_t width, size_t height)
-            :id{++spreadsheet_counter}, width{width}, height{height}
+            :id{++spreadsheet_counter}, app{SpreadsheetApplication::get_instance()}, width{width}, height{height}
     {
         print_trace();
         allocate_cells();
@@ -34,7 +34,7 @@ namespace Chapter9 {
     }
 
     Spreadsheet::Spreadsheet(Spreadsheet&& src) noexcept
-            :id{src.id}
+            :id{src.id}, app{SpreadsheetApplication::get_instance()}
     {
         print_trace();
         swap(*this, src);
