@@ -48,6 +48,16 @@ double SpreadsheetCell::string_to_double(std::string_view str_value)
     return std::strtod(str_value.data(), nullptr);
 }
 
+SpreadsheetCell::Color SpreadsheetCell::get_color() const
+{
+    return color;
+}
+
+void SpreadsheetCell::set_color(SpreadsheetCell::Color new_color)
+{
+    color = new_color;
+}
+
 std::ostream& operator<<(std::ostream& out, const SpreadsheetCell& cell)
 {
     out << cell.get_string();

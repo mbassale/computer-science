@@ -35,3 +35,10 @@ TEST_CASE("SpreadsheetCell - assignment", "[chapter8]") {
     spreadsheetCell2 = spreadsheetCell1;
     REQUIRE(spreadsheetCell1.get_value() == spreadsheetCell2.get_value());
 }
+
+TEST_CASE("SpreadsheetCell - color getter/setter", "[chapter 9]") {
+    SpreadsheetCell spreadsheet_cell;
+    REQUIRE(spreadsheet_cell.get_color() == SpreadsheetCell::Color::Black);
+    spreadsheet_cell.set_color(SpreadsheetCell::Color::Yellow);
+    REQUIRE(spreadsheet_cell.get_color() == SpreadsheetCell::Color::Yellow);
+}

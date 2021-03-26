@@ -11,6 +11,10 @@
 
 class SpreadsheetCell {
 public:
+    enum class Color {
+        Black = 1, Red, Green, Blue, Yellow
+    };
+
     SpreadsheetCell() = default;
 
     SpreadsheetCell(const SpreadsheetCell& other) = default;
@@ -23,6 +27,7 @@ public:
     SpreadsheetCell& operator=(const SpreadsheetCell& rhs);
 
     void set(double new_value);
+
     void set(int new_value) = delete;
 
     void set(std::string_view new_string);
@@ -31,9 +36,14 @@ public:
 
     [[nodiscard]] std::string get_string() const;
 
+    void set_color(Color new_color);
+
+    [[nodiscard]] Color get_color() const;
+
 private:
     double value{};
     mutable size_t num_accesses = 0;
+    Color color = Color::Black;
 
     [[nodiscard]] static std::string double_to_string(double double_value);
 
