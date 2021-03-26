@@ -23,18 +23,24 @@ namespace Chapter9 {
 
         Spreadsheet& operator=(Spreadsheet&& rhs) noexcept;
 
-        void setCellAt(size_t x, size_t y, const SpreadsheetCell& cell);
+        [[nodiscard]] size_t get_id() const;
 
         SpreadsheetCell& getCellAt(size_t x, size_t y);
+
         [[nodiscard]] const SpreadsheetCell& getCellAt(size_t x, size_t y) const;
+
+        void setCellAt(size_t x, size_t y, const SpreadsheetCell& cell);
 
         friend void swap(Spreadsheet& first, Spreadsheet& second) noexcept;
 
     private:
-        Spreadsheet() = default;
+        Spreadsheet()
+                :id{++spreadsheet_counter} { };
 
         void verify_coordinate(size_t x, size_t y) const;
 
+        static inline size_t spreadsheet_counter;
+        const size_t id;
         size_t width = 0;
         size_t height = 0;
         SpreadsheetCell** cells = nullptr;

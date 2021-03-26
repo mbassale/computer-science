@@ -20,7 +20,7 @@ namespace Chapter9 {
     }
 
     Spreadsheet::Spreadsheet(size_t width, size_t height)
-            :width{width}, height{height}
+            :id{++spreadsheet_counter}, width{width}, height{height}
     {
         print_trace();
         allocate_cells();
@@ -34,6 +34,7 @@ namespace Chapter9 {
     }
 
     Spreadsheet::Spreadsheet(Spreadsheet&& src) noexcept
+            :id{src.id}
     {
         print_trace();
         swap(*this, src);
@@ -60,6 +61,11 @@ namespace Chapter9 {
         Spreadsheet temp(std::move(rhs));
         swap(*this, temp);
         return *this;
+    }
+
+    size_t Spreadsheet::get_id() const
+    {
+        return id;
     }
 
     void Spreadsheet::setCellAt(size_t x, size_t y, const SpreadsheetCell& cell)
