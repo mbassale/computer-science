@@ -30,6 +30,6 @@ public class DinerMenu implements Menu {
 
     @Override
     public Iterator<MenuItem> createIterator() {
-        return null;
+        return new DinerMenuIterator(menuItems);
     }
 }
