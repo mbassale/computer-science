@@ -1,10 +1,9 @@
 package hfdp.ch9;
 
-import cl.mbassale.hfdp.ch9.CafeMenu;
-import cl.mbassale.hfdp.ch9.DinerMenu;
-import cl.mbassale.hfdp.ch9.PancakeHouseMenu;
-import cl.mbassale.hfdp.ch9.Waitress;
+import cl.mbassale.hfdp.ch9.*;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +14,11 @@ class WaitressTest {
         PancakeHouseMenu pancakeHouseMenu = new PancakeHouseMenu();
         DinerMenu dinerMenu = new DinerMenu();
         CafeMenu cafeMenu = new CafeMenu();
-        Waitress waitress = new Waitress(pancakeHouseMenu, dinerMenu, cafeMenu);
+        var menus = new ArrayList<Menu>();
+        menus.add(pancakeHouseMenu);
+        menus.add(dinerMenu);
+        menus.add(cafeMenu);
+        Waitress waitress = new Waitress(menus);
         assertDoesNotThrow(waitress::printMenu);
     }
 }
