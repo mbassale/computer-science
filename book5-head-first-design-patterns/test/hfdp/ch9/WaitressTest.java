@@ -14,11 +14,11 @@ class WaitressTest {
         PancakeHouseMenu pancakeHouseMenu = new PancakeHouseMenu();
         DinerMenu dinerMenu = new DinerMenu();
         CafeMenu cafeMenu = new CafeMenu();
-        var menus = new ArrayList<Menu>();
-        menus.add(pancakeHouseMenu);
-        menus.add(dinerMenu);
-        menus.add(cafeMenu);
-        Waitress waitress = new Waitress(menus);
+        MenuComponent allMenus = new Menu("ALL MENUS", "All menus combined");
+        allMenus.add(pancakeHouseMenu);
+        allMenus.add(dinerMenu);
+        allMenus.add(cafeMenu);
+        Waitress waitress = new Waitress(allMenus);
         assertDoesNotThrow(waitress::printMenu);
     }
 }
