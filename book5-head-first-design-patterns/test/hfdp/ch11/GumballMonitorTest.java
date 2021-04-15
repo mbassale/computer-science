@@ -1,7 +1,7 @@
 package hfdp.ch11;
 
-import cl.mbassale.hfdp.ch11.GumballMachine;
-import cl.mbassale.hfdp.ch11.GumballMonitor;
+import cl.mbassale.hfdp.ch11.remoteProxy.GumballMachine;
+import cl.mbassale.hfdp.ch11.remoteProxy.GumballMonitor;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

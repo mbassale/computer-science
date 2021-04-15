@@ -1,4 +1,4 @@
-package cl.mbassale.hfdp.ch11;
+package cl.mbassale.hfdp.ch11.remoteProxy;
 
 import java.util.Random;
 
