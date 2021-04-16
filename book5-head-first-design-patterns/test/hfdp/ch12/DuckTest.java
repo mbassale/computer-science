@@ -33,6 +33,8 @@ public class DuckTest {
         for (var i = 0; i < 4; i++)
             flockOfMallards.add(duckFactory.createMallardDuck());
 
+        Quackologist quackologist = new Quackologist();
+        flockOfMallards.registerObserver(quackologist);
         simulate(flockOfMallards);
         assertEquals(7, QuackCounter.getQuacks());
     }
