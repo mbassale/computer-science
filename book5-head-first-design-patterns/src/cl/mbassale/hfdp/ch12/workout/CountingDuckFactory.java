@@ -1,4 +1,4 @@
-package cl.mbassale.hfdp.ch12;
+package cl.mbassale.hfdp.ch12.workout;
 
 public class CountingDuckFactory extends AbstractDuckFactory {
     @Override

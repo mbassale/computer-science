@@ -1,15 +1,17 @@
-package cl.mbassale.hfdp.ch12;
+package cl.mbassale.hfdp.ch12.workout;
 
-public class RedheadDuck implements Quackable {
+public class GooseAdapter implements Quackable {
     Observable observable;
+    Goose goose;
 
-    public RedheadDuck() {
+    public GooseAdapter(Goose goose) {
+        this.goose = goose;
         observable = new Observable(this);
     }
 
     @Override
     public void quack() {
-        System.out.println("Redhead Quack");
+        goose.honk();
         notifyObservers();
     }
 

@@ -1,9 +1,8 @@
 package hfdp.ch12;
 
-import cl.mbassale.hfdp.ch12.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+import cl.mbassale.hfdp.ch12.workout.*;
 import org.junit.jupiter.api.Test;
 
 public class DuckTest {

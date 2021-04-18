@@ -1,4 +1,4 @@
-package cl.mbassale.hfdp.ch12;
+package cl.mbassale.hfdp.ch12.workout;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,24 +1,16 @@
-package cl.mbassale.hfdp.ch12;
+package cl.mbassale.hfdp.ch12.workout;
 
-public class QuackCounter implements Quackable {
+public class MallardDuck implements Quackable {
     Observable observable;
-    Quackable duck;
-    static int numberOfQuacks;
 
-    public QuackCounter(Quackable duck) {
-        this.duck = duck;
+    public MallardDuck() {
         observable = new Observable(this);
     }
 
     @Override
     public void quack() {
-        duck.quack();
-        numberOfQuacks++;
+        System.out.println("Mallard Quack");
         notifyObservers();
-    }
-
-    public static int getQuacks() {
-        return numberOfQuacks;
     }
 
     @Override
