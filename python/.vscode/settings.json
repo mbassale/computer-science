@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/Users/mbassale/devel/computer-science/python/venv/bin/python"
+    "python.pythonPath": "/Users/mbassale/devel/computer-science/python/venv/bin/python",
+    "jupyter.jupyterServerType": "local"
 }
