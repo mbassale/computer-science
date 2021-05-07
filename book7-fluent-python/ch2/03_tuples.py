@@ -2,7 +2,7 @@ import unittest
 import os
 
 
-class TupleRecords(unittest.TestCase):
+class TupleTest(unittest.TestCase):
 
     def test_star_operator(self):
         t = (20, 8)
@@ -57,6 +57,25 @@ class TupleRecords(unittest.TestCase):
             self.assertTrue(pop > 0)
             self.assertTrue(-180 <= latitude <= 180)
             self.assertTrue(-180 <= longitude <= 180)
+
+    def test_immutability(self):
+        a = (10, 'alpha', [1, 2])
+        b = (10, 'alpha', [1, 2])
+        self.assertEqual(a, b)
+        b[-1].append(99)
+        self.assertNotEqual(a, b)
+
+        def is_fixed(o):
+            try:
+                hash(o)
+            except TypeError:
+                return False
+            return True
+
+        fixed_tuple = (10, 'alpha', (1, 2))
+        self.assertTrue(is_fixed(fixed_tuple))
+        mutable_tuple = (10, 'alpha', [1, 2])
+        self.assertFalse(is_fixed(mutable_tuple))
 
 
 if __name__ == '__main__':
