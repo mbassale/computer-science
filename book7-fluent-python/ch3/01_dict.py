@@ -1,5 +1,6 @@
+import collections
 import unittest
-from collections import abc
+from collections import abc, defaultdict
 import random
 
 
@@ -50,7 +51,48 @@ class DictTest(unittest.TestCase):
         for i in range(10000):
             random_num = random.randint(1, 100)
             number_count.setdefault(random_num, []).append(i)
-        self.assertTrue(len(number_count), 100)
+        self.assertEqual(100, len(number_count))
+
+
+class StrKeyDict(collections.UserDict):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.default = kwargs['default'] if 'default' in kwargs else None
+
+    def __missing__(self, key):
+        if isinstance(key, str):
+            if self.default is not None:
+                self[key] = self.default()
+                return self[key]
+            else:
+                raise KeyError(key)
+        return self[str(key)]
+
+    def __contains__(self, key):
+        return key in self.keys() or str(key) in self.keys()
+
+    def get(self, key, default=None):
+        try:
+            return self[key]
+        except KeyError:
+            return default
+
+
+class UserDict(unittest.TestCase):
+    def test_defaultdict(self):
+        dd = defaultdict(set)
+        for i in range(10000):
+            random_num = random.randint(1, 100)
+            dd[random_num].add(random_num)
+        self.assertEqual(100, len(dd))
+
+    def test_subclass_default(self):
+        sd = StrKeyDict(default=list)
+        self.assertIsInstance(sd[1], list)
+        sd[1].append(1)
+        sd['1'].append(2)
+        self.assertEqual([1, 2], sd[1])
 
 
 if __name__ == '__main__':
