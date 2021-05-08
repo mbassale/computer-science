@@ -70,13 +70,10 @@ class StrKeyDict(collections.UserDict):
         return self[str(key)]
 
     def __contains__(self, key):
-        return key in self.keys() or str(key) in self.keys()
+        return str(key) in self.data
 
-    def get(self, key, default=None):
-        try:
-            return self[key]
-        except KeyError:
-            return default
+    def __setitem__(self, key, value):
+        self.data[str(key)] = value
 
 
 class UserDict(unittest.TestCase):
@@ -93,6 +90,18 @@ class UserDict(unittest.TestCase):
         sd[1].append(1)
         sd['1'].append(2)
         self.assertEqual([1, 2], sd[1])
+
+
+class Counter(unittest.TestCase):
+
+    def test_counter(self):
+        ct = collections.Counter('abracadabra')
+        self.assertEqual({'a': 5, 'b': 2, 'r': 2, 'c': 1, 'd': 1}, dict(ct))
+
+        ct.update('aaaaazzz')
+        self.assertEqual({'a': 10, 'z': 3, 'b': 2, 'r': 2, 'c': 1, 'd': 1}, dict(ct))
+
+        self.assertEqual([('a', 10), ('z', 3), ('b', 2)], ct.most_common(3))
 
 
 if __name__ == '__main__':
