@@ -2,6 +2,7 @@ import collections
 import unittest
 from collections import abc, defaultdict
 import random
+from types import MappingProxyType
 
 
 class DictTest(unittest.TestCase):
@@ -53,6 +54,12 @@ class DictTest(unittest.TestCase):
             number_count.setdefault(random_num, []).append(i)
         self.assertEqual(100, len(number_count))
 
+    def test_view(self):
+        d = dict(a=10, b=20, c=30)
+        values = d.values()
+        self.assertEqual(3, len(values))
+        self.assertEqual([10, 20, 30], list(values))
+
 
 class StrKeyDict(collections.UserDict):
 
@@ -76,7 +83,7 @@ class StrKeyDict(collections.UserDict):
         self.data[str(key)] = value
 
 
-class UserDict(unittest.TestCase):
+class UserDictTest(unittest.TestCase):
     def test_defaultdict(self):
         dd = defaultdict(set)
         for i in range(10000):
@@ -92,7 +99,7 @@ class UserDict(unittest.TestCase):
         self.assertEqual([1, 2], sd[1])
 
 
-class Counter(unittest.TestCase):
+class CounterTest(unittest.TestCase):
 
     def test_counter(self):
         ct = collections.Counter('abracadabra')
@@ -102,6 +109,22 @@ class Counter(unittest.TestCase):
         self.assertEqual({'a': 10, 'z': 3, 'b': 2, 'r': 2, 'c': 1, 'd': 1}, dict(ct))
 
         self.assertEqual([('a', 10), ('z', 3), ('b', 2)], ct.most_common(3))
+
+
+class MappingProxyTest(unittest.TestCase):
+
+    def test_proxy(self):
+        d = {1: 'A'}
+        d_proxy = MappingProxyType(d)
+        self.assertEqual('A', d_proxy[1])
+
+        def set_proxy():
+            d_proxy[2] = 'X'
+
+        self.assertRaises(TypeError, set_proxy)
+
+        d[2] = 'B'
+        self.assertEqual('B', d_proxy[2])
 
 
 if __name__ == '__main__':
