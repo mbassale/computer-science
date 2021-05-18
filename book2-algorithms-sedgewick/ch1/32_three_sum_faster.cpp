@@ -4,20 +4,21 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <unordered_map>
+#include <unordered_set>
 #include <chrono>
 
 size_t two_sum_k(std::vector<long>::iterator begin, std::vector<long>::iterator end, long k) {
     size_t sum_count = 0;
-    std::unordered_map<long, bool> hashmap{std::make_pair(*begin, true)};
+    std::unordered_set<long> hashset{ *begin };
 
     auto it = begin + 1;
     while (it < end) {
-        auto find_it = hashmap.find(k - *it);
-        if (find_it != hashmap.end()) {
+        auto num = *it;
+        auto find_it = hashset.find(k - num);
+        if (find_it != hashset.end()) {
             sum_count++;
         } else
-            hashmap[*it] = true;
+            hashset.insert(num);
         it++;
     }
 
