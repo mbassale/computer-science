@@ -9,7 +9,7 @@
 
 size_t two_sum_k(std::vector<long>::iterator begin, std::vector<long>::iterator end, long k) {
     size_t sum_count = 0;
-    std::unordered_set<long> hashset{ *begin };
+    std::unordered_set<long> hashset{*begin};
 
     auto it = begin + 1;
     while (it < end) {
@@ -60,11 +60,9 @@ int main(int argc, char *argv[]) {
 
     cout << "Loading data." << endl;
 
-    stringstream data_filename;
-    data_filename << "./data/" << argv[1];
-    ifstream in_file(data_filename.str(), ios::in);
+    ifstream in_file(argv[1], ios::in);
     if (!in_file.is_open()) {
-        cerr << "Cannot open data filename: " << data_filename.str() << endl;
+        cerr << "Cannot open data filename: " << argv[1] << endl;
         return EXIT_FAILURE;
     }
 
