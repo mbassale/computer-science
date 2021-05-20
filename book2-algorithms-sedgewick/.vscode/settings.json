@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/home/mbassale/devel/computer-science/book2-algorithms-sedgewick/venv/bin/python3.9",
+    "python.pythonPath": "/usr/local/Cellar/python@3.9/3.9.4/Frameworks/Python.framework/Versions/3.9/bin/python3.9",
     "files.associations": {
         "stack": "cpp",
         "memory": "cpp",
