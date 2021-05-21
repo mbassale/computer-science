@@ -24,7 +24,9 @@ class UnionFind:
 
     def find(self, p: int) -> int:
         while p != self.id[p]:
-            p = self.id[p]
+            parent = self.id[p]
+            self.id[p] = parent # path compression
+            p = parent
         return p
 
     def connected(self, p: int, q: int) -> bool:
