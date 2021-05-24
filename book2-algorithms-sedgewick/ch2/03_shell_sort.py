@@ -3,7 +3,7 @@ import sys
 import random
 import time
 
-class InsertionSort:
+class ShellSort:
 
     def sort(self, items) -> None:
         h = 1
@@ -40,9 +40,9 @@ def main():
         print('Numbers: ', ', '.join((str(n) for n in numbers)))
     
     print('Sorting... ', end='', flush=True)
-    insertion_sort = InsertionSort()
+    shell_sort = ShellSort()
     t1 = time.time()
-    insertion_sort.sort(numbers)
+    shell_sort.sort(numbers)
     t2 = time.time()
     print('Done.')
 
