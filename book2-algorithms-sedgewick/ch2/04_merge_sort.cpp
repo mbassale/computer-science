@@ -21,10 +21,34 @@ public:
 private:
     void merge_sort(T& aux, T& arr, size_t left, size_t right) {
         if (left >= right) return;
+        auto len = right - left + 1;
+        // for subarrays of less than 15 elements, execute a shell sort.
+        if (len <= 15) {
+            shell_sort(arr, left, right);
+            return;
+        }
         size_t mid = left + std::floor((right - left) / 2.0); // prevent overflow.
         merge_sort(aux, arr, left, mid);
         merge_sort(aux, arr, mid + 1, right);
-        merge(aux, arr, left, mid, right);
+        // only merge if subarrays are not ordered.
+        if (arr[mid] > arr[mid + 1])
+            merge(aux, arr, left, mid, right);
+    }
+
+    void shell_sort(T& arr, size_t left, size_t right) {
+        auto len = right - left + 1;
+        size_t h = 1;
+        while (h < len / 3) h = 3 * h + 1; // 1, 4, 13, 40, 121, 364, 1093, ...
+        while (h >= 1) {
+            for (size_t i = left + h; i <= right; i++) {
+                for (size_t j = i; j >= left + h && arr[j] < arr[j - h]; j -= h) {
+                    auto tmp = arr[j];
+                    arr[j] = arr[j - h];
+                    arr[j - h] = tmp;
+                }
+            }
+            h = h / 3;
+        }
     }
  
     void merge(T& aux, T& arr, size_t left, size_t mid, size_t right) {
@@ -102,7 +126,6 @@ int main(int argc, char* argv[]) {
     for (size_t i = 0; i < numbers.size() - 1; i++) {
         if (numbers[i] > numbers[i + 1]) {
             std::cerr << "Bad sorting: " << numbers[i] << ", " << numbers[i + 1] << std::endl;
-            return EXIT_FAILURE;
         }
     }
     std::cout << "Done." << std::endl;
