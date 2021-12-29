@@ -19,6 +19,15 @@ public class Example9BinaryTreeSum {
         }
     }
 
+    /**
+     * Sum all the nodes in the binary tree.
+     * Time: O(n)
+     * Memory: O(log(n))
+     * 
+     * @param <T>
+     * @param node
+     * @return
+     */
     <T extends Number> int sum(Node<T> node) {
         if (node == null)
             return 0;
