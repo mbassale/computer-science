@@ -2,7 +2,10 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
 	"math"
+	"net/http"
 )
 
 func ifStmts() {
@@ -138,8 +141,36 @@ Loop:
 	}
 }
 
+func deferStmt() {
+	fmt.Printf("%v: start\n", log.Llongfile)
+	defer fmt.Println("middle")
+	fmt.Printf("%v: end\n", log.Llongfile)
+}
+
+func deferStmt2() {
+	res, err := http.Get("http://www.google.com/robots.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer res.Body.Close()
+	robots, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("%s\n", robots)
+}
+
+func deferStmt3() {
+	a := "start"
+	defer fmt.Println(a)
+	a = "end"
+}
+
 func main() {
 	ifStmts()
 	switchStmts()
 	forStmt()
+	deferStmt()
+	deferStmt2()
+	deferStmt3()
 }
