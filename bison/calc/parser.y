@@ -42,7 +42,16 @@ exp:
   | exp '+' exp { $$ = $1 + $3; }
   | exp '-' exp { $$ = $1 - $3; }
   | exp '*' exp { $$ = $1 * $3; }
-  | exp '/' exp { $$ = $1 / $3; }
+  | exp '/' exp { 
+    if ($3) {
+      $$ = $1 / $3; 
+    } else {
+      $$ = 1;
+      fprintf(stderr, "%d.%d-%d.%d: division by zero\n",
+        @3.first_line, @3.first_column,
+        @3.last_line, @3.last_column);
+    }
+  }
   // unary negation
   | '-' exp %prec NEG { $$ = -$2; }
   | exp '^' exp { $$ = pow ($1, $3); }
