@@ -1,14 +1,9 @@
 # Folder makefile
 
-all: 0-hello 1-printf 2-move
+BINARIES= 0-hello 1-printf 2-move 3-jump 4-jump-loop 5-worst-loop
+all: $(BINARIES)
 
-0-hello: 0-hello.o
-	gcc -o $@ $< -no-pie
-
-1-printf: 1-printf.o
-	gcc -o $@ $< -no-pie
-
-2-move: 2-move.o
+$(BINARIES): % : %.o
 	gcc -o $@ $< -no-pie
 
 %.o: %.asm
@@ -17,4 +12,4 @@ all: 0-hello 1-printf 2-move
 .PHONY: clean
 
 clean:
-	rm -f *.o 0-hello 1-printf 2-move
+	rm -f *.o *.lst $(BINARIES)
