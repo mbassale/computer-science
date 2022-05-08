@@ -1,0 +1,31 @@
+set disassemble-flavor intel
+
+Print zero-terminated string
+x/s [addr]
+x/s &label
+
+Print numbers
+x/dw &label
+x/xw &label
+x/fg &floatLabel
+x/fx &floatLabel
+
+Print address content with format
+x/[num]c [addr]
+x/[num]d [addr]
+x/[num]x [addr]
+
+Print variable, register and others
+p $rax
+p/x $rax
+
+Breakpoints
+break [lbl]
+step
+
+Display
+info registers | i r
+info breakpoints
+info proc
+info stack
+info frame
