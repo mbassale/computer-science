@@ -1,7 +1,7 @@
 
 CPPFLAGS=-g -std=c++17
 
-TARGETS=0_two_number_sum 0_two_number_sum2 1_valid_subsequence 2_sorted_square_array
+TARGETS=0_two_number_sum 0_two_number_sum2 1_valid_subsequence 2_sorted_square_array 3_tournament_winner
 .PHONY all: $(TARGETS)
 
 0_two_number_sum: 0_two_number_sum.o
@@ -14,6 +14,9 @@ TARGETS=0_two_number_sum 0_two_number_sum2 1_valid_subsequence 2_sorted_square_a
 	$(CXX) $(CPPFLAGS) $< -o $@
 
 2_sorted_square_array: 2_sorted_square_array.o
+	$(CXX) $(CPPFLAGS) $< -o $@
+
+3_tournament_winner: 3_tournament_winner.o
 	$(CXX) $(CPPFLAGS) $< -o $@
 
 %.o: %.cpp
