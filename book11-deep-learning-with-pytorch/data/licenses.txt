@@ -1,0 +1,30 @@
+LICENSES
+--------
+
+ch2/dog1.jpg
+Bob Haarmans, CC BY 2.0 <https://creativecommons.org/licenses/by/2.0>, via Wikimedia Commons
+https://commons.wikimedia.org/wiki/File:A_dog_-_6252881250.jpg
+
+ch2/cat1.jpg
+W.carter, CC0, via Wikimedia Commons
+https://commons.wikimedia.org/wiki/File:Young_tabby_cat_on_a_concrete_floor.jpg
+
+ch2/cannon1.jpg
+Bernard Gagnon, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons
+https://commons.wikimedia.org/wiki/File:Cannon_in_Bastion_of_St._Dominic,_Tarragona.jpg
+
+ch2/cannon2.jpg
+Bernard Gagnon, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons
+https://commons.wikimedia.org/wiki/File:Cannon_at_Uperkot_Fort_02.jpg
+
+ch2/cannon3.jpg
+AnonymousUnknown author, Public domain, via Wikimedia Commons
+https://commons.wikimedia.org/wiki/File:EB1911_-_Ordnance_Fig._1.png
+
+ch2/cannon4.jpg
+Canon.vs.nikon, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons
+https://commons.wikimedia.org/wiki/File:Fleming_cannon_firing.jpg
+
+ch2/imagenet_classes.txt
+Deep Learning with PyTorch
+https://github.com/deep-learning-with-pytorch/dlwpt-code/blob/master/data/p1ch2/imagenet_classes.txt
