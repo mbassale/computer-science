@@ -1,0 +1,37 @@
+; 1.1.6 Conditional Expressions and Predicates
+
+(define (abs x) 
+  (cond ((> x 0) x)
+        ((= x 0) 0)
+        ((< x 0) (- x))
+  )
+)
+(abs -10)
+(abs 0)
+(abs 10)
+
+(define (abs x)
+  (cond ((< x 0) (- x))
+        (else x)))
+(abs -10)
+(abs 0)
+(abs 10)
+
+(define (abs x)
+  (if (< x 0) 
+      (- x) 
+      x))
+(abs -10)
+(abs 0)
+(abs 10)
+
+(define (test-range x) (and (> x 5) (< x 10)))
+(test-range 7)
+(test-range 1)
+(test-range 11)
+
+(define (>= x y)
+  (or (> x y) (= x y)))
+(>= 1 1)
+(>= 1 2)
+(>= 2 1)
