@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <optional>
+#include <unordered_map>
 #include <vector>
 
 using namespace std;
@@ -38,7 +39,7 @@ optional<int> binarySearch(vector<int>& array, int num, int min, int max) {
 }
 
 // Time: O(n * log(n)) Space: O(log(n))
-int countNumberOfPairs(vector<int>& array, int k) {
+int countNumberOfPairsBinarySearch(vector<int>& array, int k) {
   sort(array.begin(), array.end());
   int numberOfPairs = 0;
   for (size_t i = 0; i < array.size(); i++) {
@@ -55,6 +56,26 @@ int countNumberOfPairs(vector<int>& array, int k) {
   return numberOfPairs / 2;
 }
 
+// Time: O(n) Space: O(n)
+int countNumberOfPairsHashTable(vector<int>& array, int k) {
+  unordered_map<int, int> hash;
+  hash.reserve(array.size());
+  for (int num : array) {
+    hash[num]++;
+  }
+
+  int numberOfPairs = 0;
+  for (size_t i = 0; i < array.size(); i++) {
+    const auto otherNum = array[i] - k;
+    if (hash.find(otherNum) != hash.end() && hash[otherNum] > 0) {
+      hash[otherNum]--;
+      numberOfPairs++;
+    }
+  }
+
+  return numberOfPairs;
+}
+
 int main(int argc, char* argv[]) {
   // Brute Force
   vector<int> arr = {1, 7, 5, 9, 2, 12, 3};
@@ -62,15 +83,25 @@ int main(int argc, char* argv[]) {
   auto result = countNumberOfPairsBruteForce(arr, 2);
   auto stop = high_resolution_clock::now();
   auto delta = duration_cast<nanoseconds>(stop - start);
-  cout << "countNumberOfPairs(%) = " << result << " Runtime: " << delta.count()
+  cout << "countNumberOfPairsBruteForce(%) = " << result << " Runtime: " << delta.count()
        << "ns" << endl;
 
   // Sorting + Binary Search
+  vector<int> arr2 = {1, 7, 5, 9, 2, 12, 3};
   start = high_resolution_clock::now();
-  result = countNumberOfPairs(arr, 2);
+  result = countNumberOfPairsBinarySearch(arr2, 2);
   stop = high_resolution_clock::now();
   delta = duration_cast<nanoseconds>(stop - start);
-  cout << "countNumberOfPairs(%) = " << result << " Runtime: " << delta.count()
+  cout << "countNumberOfPairsBinarySearch(%) = " << result << " Runtime: " << delta.count()
+       << "ns" << endl;
+
+  // Hash Table
+  vector<int> arr3 = {1, 7, 5, 9, 2, 12, 3};
+  start = high_resolution_clock::now();
+  result = countNumberOfPairsHashTable(arr3, 2);
+  stop = high_resolution_clock::now();
+  delta = duration_cast<nanoseconds>(stop - start);
+  cout << "countNumberOfPairsHashTable(%) = " << result << " Runtime: " << delta.count()
        << "ns" << endl;
   return EXIT_SUCCESS;
 }
