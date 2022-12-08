@@ -27,6 +27,7 @@ optional<int> binarySearch(vector<int>& array, int num, int min, int max) {
   if (max < min) {
     return nullopt;
   }
+  // To prevent overflow, min + avg of delta
   int mid = min + (max - min) / 2;
   const auto current = array[mid];
   if (current == num) {
