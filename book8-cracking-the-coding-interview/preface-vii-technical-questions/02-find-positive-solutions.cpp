@@ -56,7 +56,7 @@ size_t findSolutionsBruteForceUseCubeRoot(int min, int max) {
   for (int a = min; a <= max; a++) {
     for (int b = min; b <= max; b++) {
       for (int c = min; c <= max; c++) {
-        int d = cbrt(pow(a, 3) + pow(b, 3) + pow(c, 3));
+        int d = cbrt(pow(a, 3) + pow(b, 3) - pow(c, 3));
         const auto lhs = pow(a, 3) + pow(b, 3);
         const auto rhs = pow(c, 3) + pow(d, 3);
         if (lhs == rhs) {
