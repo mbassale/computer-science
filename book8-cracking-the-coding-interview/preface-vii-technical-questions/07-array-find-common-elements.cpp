@@ -37,6 +37,30 @@ size_t countElementsInCommonHashTable(const vector<T>& a, const vector<T>& b) {
   return count;
 }
 
+// Time: O(N) Space: O(1)
+template <typename T>
+size_t countElementsInCommonLinearSearch(const vector<T>& a,
+                                         const vector<T>& b) {
+  size_t count = 0;
+  size_t aIdx = 0;
+  size_t bIdx = 0;
+
+  while (aIdx < a.size() && bIdx < b.size()) {
+    const auto& aElem = a[aIdx];
+    
+    while (b[bIdx] < aElem && bIdx < b.size()) {
+      bIdx++;
+    }
+
+    if (aElem == b[bIdx]) {
+      count++;
+    }
+
+    aIdx++;
+  }
+  return count;
+}
+
 template <typename T>
 void invokeCountElementsInCommon(const vector<T>& a, const vector<T>& b) {
   auto start = high_resolution_clock::now();
@@ -51,6 +75,13 @@ void invokeCountElementsInCommon(const vector<T>& a, const vector<T>& b) {
   stop = high_resolution_clock::now();
   delta = duration_cast<microseconds>(stop - start);
   cout << "countElementsInCommonHashTable(): " << count
+       << " Runtime: " << delta.count() << "us" << endl;
+
+  start = high_resolution_clock::now();
+  count = countElementsInCommonLinearSearch(a, b);
+  stop = high_resolution_clock::now();
+  delta = duration_cast<microseconds>(stop - start);
+  cout << "countElementsInCommonLinearSearch(): " << count
        << " Runtime: " << delta.count() << "us" << endl;
 }
 
