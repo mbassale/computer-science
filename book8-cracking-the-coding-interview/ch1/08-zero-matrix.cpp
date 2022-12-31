@@ -1,5 +1,7 @@
 #include <chrono>
+#include <iomanip>
 #include <iostream>
+#include <limits>
 #include <unordered_map>
 #include <vector>
 
@@ -73,14 +75,39 @@ void zeroMatrixExtraStorage(vector<vector<T>>& matrix) {
 
 template <typename T>
 void zeroMatrixNoExtraStorage(vector<vector<T>>& matrix) {
-  // TODO: implement using matrix itself as extra storage.
+
+  // explore for zeroes
+  for (size_t row = 0; row < matrix.size(); row++) {
+    for (size_t col = 0; col < matrix[row].size(); col++) {
+      if (matrix[row][col] == 0) {
+        // mark upper row and left column for zeroing
+        matrix[row][0] = numeric_limits<T>::max();
+        matrix[0][col] = numeric_limits<T>::max();
+        break;
+      }
+    }
+  }
+
+  // zero the rows
+  for (size_t row = 0; row < matrix.size(); row++) {
+    if (matrix[row][0] == numeric_limits<T>::max()) {
+      zeroMatrixRow(matrix, row);
+    }
+  }
+
+  // zero the cols
+  for (size_t col = 0; col < matrix[0].size(); col++) {
+    if (matrix[0][col] == numeric_limits<T>::max()) {
+      zeroMatrixCol(matrix, col);
+    }
+  }
 }
 
 template <typename T>
 void printMatrix(vector<vector<T>>& matrix) {
   for (auto it = matrix.cbegin(); it != matrix.cend(); it++) {
     for (auto itemIt = it->cbegin(); itemIt != it->cend(); itemIt++) {
-      cout << *itemIt << " ";
+      cout << std::setfill('0') << std::setw(2) << *itemIt << " ";
     }
     cout << endl;
   }
@@ -94,10 +121,21 @@ void invokeZeroMatrix(const vector<vector<T>>& matrix) {
   auto start = high_resolution_clock::now();
   zeroMatrixExtraStorage(m);
   auto stop = high_resolution_clock::now();
-  cout << "After zeroMatrixExtraStorage(): " << endl;
+  cout << "After zeroMatrixExtraStorage():" << endl;
   printMatrix(m);
-  cout << "Runtime: " << duration_cast<microseconds>(stop - start).count()
-       << "us" << endl;
+  cout << "Runtime: " << duration_cast<nanoseconds>(stop - start).count()
+       << "ns" << endl;
+
+  m = matrix;
+  cout << "Before:" << endl;
+  printMatrix(m);
+  start = high_resolution_clock::now();
+  zeroMatrixNoExtraStorage(m);
+  stop = high_resolution_clock::now();
+  cout << "After zeroMatrixNoExtraStorage():" << endl;
+  printMatrix(m);
+  cout << "Runtime: " << duration_cast<nanoseconds>(stop - start).count()
+       << "ns" << endl;
 }
 
 int main(int argc, char* argv[]) {
