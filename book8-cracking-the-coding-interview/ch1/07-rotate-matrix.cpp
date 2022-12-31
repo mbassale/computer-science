@@ -54,8 +54,40 @@ void mirrorX(vector<vector<T>>& matrix) {
 // Time: O(N^2) Space: O(1)
 template<typename T>
 void rotate90(vector<vector<T>>& matrix) {
+  if (matrix.size() == 0 || matrix.size() != matrix[0].size()) {
+    return;
+  }
   transpose(matrix);
   mirrorX(matrix);
+}
+
+template<typename T>
+void rotate90Layers(vector<vector<T>>& matrix) {
+  if (matrix.size() == 0 || matrix.size() != matrix[0].size()) {
+    return;
+  }
+
+  int sz = matrix.size();
+  for (int layer = 0; layer < sz / 2; layer++) {
+    const auto first = layer;
+    const auto last = sz - 1 - layer;
+    for (int i = first; i < last; i++) {
+      const auto offset = i - first;
+      const auto top = matrix[first][i];
+
+      // left -> top
+      matrix[first][i] = matrix[last-offset][first];
+
+      // bottom -> left
+      matrix[last - offset][first] = matrix[last][last - offset];
+
+      // right -> bottom
+      matrix[last][last - offset] = matrix[i][last];
+
+      // top -> right
+      matrix[i][last] = top;
+    }
+  }
 }
 
 template<typename T>
@@ -70,13 +102,25 @@ void printMatrix(vector<vector<T>>& matrix) {
 
 template<typename T>
 void invokeRotate90(vector<vector<T>>& matrix) {
+  auto m = matrix;
   cout << "Before:" << endl;
-  printMatrix(matrix);
-  const auto start = high_resolution_clock::now();
-  rotate90(matrix);
-  const auto stop = high_resolution_clock::now();
-  cout << "After:" << endl;
-  printMatrix(matrix);
+  printMatrix(m);
+  auto start = high_resolution_clock::now();
+  rotate90(m);
+  auto stop = high_resolution_clock::now();
+  cout << "After rotate90():" << endl;
+  printMatrix(m);
+  cout << "Runtime: " << duration_cast<microseconds>(stop - start).count()
+       << "us" << endl;
+
+  m = matrix;
+  cout << "Before:" << endl;
+  printMatrix(m);
+  start = high_resolution_clock::now();
+  rotate90(m);
+  stop = high_resolution_clock::now();
+  cout << "After rotate90Layers():" << endl;
+  printMatrix(m);
   cout << "Runtime: " << duration_cast<microseconds>(stop - start).count()
        << "us" << endl;
 }
