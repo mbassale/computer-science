@@ -30,6 +30,7 @@ struct Node {
   }
 };
 
+// Time: O(N) with N=len(list) Space: O(1)
 template <typename T>
 void deleteMiddleNode(const shared_ptr<Node<T>>& node) {
   if (!node || !node->next) {
