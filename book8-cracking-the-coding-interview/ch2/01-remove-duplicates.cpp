@@ -27,6 +27,33 @@ void removeDuplicatesHashTable(list<T>& lst) {
   }
 }
 
+// Time: O(N^2) Space: O(1)
+template<typename T>
+void removeDuplicatesTwoPointers(list<T>& lst) {
+  if (lst.size() < 1) {
+    return;
+  }
+
+  auto it = lst.begin();
+  while (it != lst.end()) {
+    const auto currentIt = it;
+    const auto currentValue = *it;
+    it++;
+    while (it != lst.end()) {
+      if (*it == currentValue) {
+        auto nextIt = it;
+        nextIt++;
+        lst.erase(it);
+        it = nextIt;
+        continue;
+      }
+      it++;
+    }
+    it = currentIt;
+    it++;
+  }
+}
+
 template <typename T>
 void printList(list<T>& lst) {
   for (auto it = lst.cbegin(); it != lst.cend(); it++) {
@@ -44,6 +71,19 @@ void invokeRemoveDuplicates(list<T>& lst) {
   auto stop = high_resolution_clock::now();
   cout << endl;
   cout << "After removeDuplicatesHashTable(): ";
+  printList(l);
+  cout << endl;
+  cout << "Runtime: " << duration_cast<nanoseconds>(stop - start).count()
+       << "ns" << endl;
+
+  l = lst;
+  cout << "Before: ";
+  printList(l);
+  start = high_resolution_clock::now();
+  removeDuplicatesTwoPointers(l);
+  stop = high_resolution_clock::now();
+  cout << endl;
+  cout << "After removeDuplicatesTwoPointers(): ";
   printList(l);
   cout << endl;
   cout << "Runtime: " << duration_cast<nanoseconds>(stop - start).count()
