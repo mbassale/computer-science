@@ -4,6 +4,7 @@
 #include <memory>
 
 using namespace std;
+using namespace std::chrono;
 
 template <typename T>
 struct Node {
@@ -102,11 +103,14 @@ void invokePartitionList(const initializer_list<T>& lst, const T& value) {
   auto head = Node<T>::make(lst);
   printList(head);
   cout << ", " << value << ") = ";
-  auto partitionResult = partitionList<T>(head, value);
+  const auto start = high_resolution_clock::now();
+  const auto partitionResult = partitionList<T>(head, value);
+  const auto stop = high_resolution_clock::now();
   printList(partitionResult.left);
   cout << ",";
   printList(partitionResult.right);
-  cout << endl;
+  cout << " Runtime: " << duration_cast<nanoseconds>(stop - start).count()
+       << "ns" << endl;
 }
 
 int main(int argc, char* argv[]) {
