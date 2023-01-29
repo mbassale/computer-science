@@ -17,6 +17,7 @@
         "tuple": "cpp",
         "type_traits": "cpp",
         "vector": "cpp",
-        "memory": "cpp"
+        "memory": "cpp",
+        "unordered_map": "cpp"
     }
 }
