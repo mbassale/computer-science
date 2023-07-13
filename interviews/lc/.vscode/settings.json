@@ -1,6 +1,11 @@
 {
   "files.associations": {
     "vector": "cpp",
-    "optional": "cpp"
+    "optional": "cpp",
+    "__debug": "cpp",
+    "__config": "cpp",
+    "__hash_table": "cpp",
+    "string": "cpp",
+    "unordered_map": "cpp"
   }
 }
