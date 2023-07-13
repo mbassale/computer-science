@@ -19,6 +19,9 @@
     "memory_resource": "cpp",
     "locale": "cpp",
     "string_view": "cpp",
-    "__string": "cpp"
+    "__string": "cpp",
+    "__split_buffer": "cpp",
+    "__memory": "cpp",
+    "memory": "cpp"
   }
 }
