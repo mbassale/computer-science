@@ -6,6 +6,19 @@
     "__config": "cpp",
     "__hash_table": "cpp",
     "string": "cpp",
-    "unordered_map": "cpp"
+    "unordered_map": "cpp",
+    "iosfwd": "cpp",
+    "unordered_set": "cpp",
+    "iostream": "cpp",
+    "cassert": "cpp",
+    "sstream": "cpp",
+    "__assert": "cpp",
+    "__node_handle": "cpp",
+    "array": "cpp",
+    "bit": "cpp",
+    "memory_resource": "cpp",
+    "locale": "cpp",
+    "string_view": "cpp",
+    "__string": "cpp"
   }
 }
