@@ -1,18 +1,22 @@
 #pragma once
 
-#include <iostream>
+#include <algorithm>
 #include <cassert>
 #include <chrono>
+#include <cstdio>
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
+#include <utility>
 #include <vector>
 
 using namespace std::chrono;
 using std::cout;
 using std::endl;
 using std::ostringstream;
+using std::pair;
 using std::string;
 using std::unordered_map;
 using std::unordered_set;
