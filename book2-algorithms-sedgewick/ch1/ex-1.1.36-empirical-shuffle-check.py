@@ -4,7 +4,7 @@ import random
 
 def shuffle(a: list[float]) -> list[float]:
     for i in range(len(a)):
-        r = random.randint(0, len(a) - 1)
+        r = i + int(random.uniform(0, len(a) - i))
         a[i], a[r] = a[r], a[i]
     return a
 
