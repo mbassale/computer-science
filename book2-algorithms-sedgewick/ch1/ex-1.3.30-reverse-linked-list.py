@@ -1,10 +1,10 @@
 #
-# [Sedgewick][Ch1][Python] Exercise 1.3.30 Reverse Linked List
+# [Sedgewick][Ch1][Python] Exercise 1.3.30 Reverse Linked List (Iterative and Recursive solutions)
 #
 # $ python ex-1.3.30-reverse-linked-list.py
-# ..
+# ...
 # ----------------------------------------------------------------------
-# Ran 2 tests in 0.000s
+# Ran 3 tests in 0.000s
 #
 # OK
 #
@@ -58,6 +58,21 @@ class List:
                 count -= 1
             self.last = old_first
 
+    def reverse_recursive(self) -> None:
+        if self.n <= 1:
+            return
+        old_first = self.last.next
+        self.reverse_recursive_impl(self.n, self.last.next)
+        self.last = old_first
+
+    def reverse_recursive_impl(self, count: int, first: Node) -> Node:
+        if count == 0:
+            return first
+        second = first.next
+        rest = self.reverse_recursive_impl(count - 1, second)
+        second.next = first
+        return rest
+
     def __str__(self) -> str:
         if self.n == 0:
             return "[]"
@@ -99,6 +114,25 @@ class ReverseLinkedListTest(unittest.TestCase):
             self.assertEqual(str(lst), str(values))
 
             lst.reverse()
+            self.assertEqual(lst.size(), len(values))
+            self.assertEqual(str(lst), str(list(reversed(values))))
+
+    def test_recursive_reverse(self):
+        test_cases = [
+            [1],
+            [1, 2],
+            [1, 2, 3],
+            [i + 1 for i in range(20)],
+        ]
+        for values in test_cases:
+            lst = List()
+            for n in values:
+                lst.append(n)
+            self.assertFalse(lst.empty())
+            self.assertTrue(lst.size() > 0)
+            self.assertEqual(str(lst), str(values))
+
+            lst.reverse_recursive()
             self.assertEqual(lst.size(), len(values))
             self.assertEqual(str(lst), str(list(reversed(values))))
 
