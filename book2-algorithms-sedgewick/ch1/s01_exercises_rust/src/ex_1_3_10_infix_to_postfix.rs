@@ -1,5 +1,5 @@
 /*
-[Sedgewick][Ch1][Python] Exercise 1.3.10 Infix to Postfix conversion
+[Sedgewick][Ch1][Rust] Exercise 1.3.10 Infix to Postfix conversion
 
 Example Trace:
 INPUT: ((A+B)*C)+(A+B)            EXPECTED: AB+C*AB++
