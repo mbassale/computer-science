@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-fn merge_sort(arr: &mut Vec<i32>) -> &Vec<i32> {
+pub fn merge_sort(arr: &mut Vec<i32>) -> &Vec<i32> {
     let mut aux: Vec<i32> = Vec::with_capacity(arr.len());
     aux.resize(arr.len(), 0);
 
