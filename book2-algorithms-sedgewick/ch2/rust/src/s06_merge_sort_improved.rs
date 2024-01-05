@@ -83,6 +83,7 @@ mod tests {
 
     use super::merge_sort_improved;
     use crate::s04_merge_sort::merge_sort;
+    use crate::s07_quick_sort::quick_sort;
     use rand::distributions::{Distribution, Uniform};
     use rand::thread_rng;
     use std::time::Instant;
@@ -132,6 +133,15 @@ mod tests {
         let duration = start.elapsed();
         println!(
             "merge_sort_improved(Vec<i32>(10000 nums)): {}ms",
+            duration.as_millis()
+        );
+
+        let mut test_case3 = random_numbers.clone();
+        let start = Instant::now();
+        quick_sort(&mut test_case3);
+        let duration = start.elapsed();
+        println!(
+            "quick_sort(Vec<i32>(10000 nums)): {}ms",
             duration.as_millis()
         );
     }
