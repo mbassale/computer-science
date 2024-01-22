@@ -35,7 +35,7 @@ impl MinPQ {
 
     fn swim(&mut self, k: usize) {
         let mut k = k;
-        while k > 0 && self.data[k / 2].0 > self.data[k].0 {
+        while k > 1 && self.data[k / 2].0 > self.data[k].0 {
             self.data.swap(k / 2, k);
             k = k / 2;
         }
