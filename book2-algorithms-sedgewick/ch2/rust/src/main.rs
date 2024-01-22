@@ -1,5 +1,6 @@
 mod ex2_2_18_shuffle_linked_list;
 mod ex2_2_19_inversions;
+mod ex2_2_25_computational_number_theory;
 mod s01_selection_sort;
 mod s02_insertion_sort;
 mod s03_shell_sort;
