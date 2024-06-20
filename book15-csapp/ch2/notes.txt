@@ -44,4 +44,50 @@ A single byte can be represented by 2 hex digits. Fill in the missing entries in
       172   1010 1100   0xAC
       231   1110 0111   0xE7
 
+Practice Problem 2.8
+Fill in the following table showing the results of evaluating Boolean ops in bit vectors:
+
+  Operation    Result  Hex
+  ------------------------
+          a  01101001   69
+          b  01010101   55
+         ~a  10010110   96
+         ~b  10101010   AA
+        a&b  01000001   41
+        a|b  01111101   7D
+        a^b  00111100   3C
+ 
+Practice Problem 2.10
+Inplace swap by using XOR.
+
+void inplace_swap(int *x, int *y) {
+  *y = *x ^ *y;
+  *x = *x ^ *y;
+  *y = *x ^ *y;
+}
+
+  Step        *x        *y
+  ------------------------------------
+  Initially    a         b
+     Step 1    a       a^b
+     Step 2    a^(a^b) a^b
+     Step 3    a^(a^b) (a^(a^b))^(a^b)
+     Result    a^a^b   a^a^b^a^b
+     Equals    b       a
+
+Practice Problem 2.12
+Write C expressions, in terms of variable x for the following values.
+
+A. The least significant byte of x, with all other bits set to 0.
+   x & 0xFF
+
+B. All but the least significant byte of x complemented, with the least 
+   significant byte left unchanged.
+   ((0xFFFFFFFF ^ x) & 0xFFFFFF00) | (x & 0xFF)
+
+C. The least significant byte set to all ones, and all other bytes of x
+   left unchanged.
+
+   x | 0xFF
+
 
