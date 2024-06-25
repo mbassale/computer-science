@@ -142,3 +142,10 @@ Using the table filled in Problem 2.17, fill in the following table:
  0  0x0    0000    0
  5  0x5    0101    5
 
+Practice Problem 2.22
+Show that each of the following bit vectors is a two's complement representation of -5 by applying the Equation 2.3:
+
+A. 1011 = -2^3 + 2^1 + 2^0 = -8 + 2 + 1 = -5
+B. 11011 = -2^4 + 2^3 + 2^1 + 2^0 = -16 + 8 + 2 + 1 = -5
+C. 111011 = -2^5 + 2^4 + 2^3 + 2^1 + 2^0 = -32 + 16 + 8 + 2 + 1 = -5
+
