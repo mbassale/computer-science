@@ -7,7 +7,11 @@ RUN apt update && apt install -y \
     wget \
     vim \
     sudo \
+    man-db \
     && apt clean
+
+# Unminimize the system to allow interactive shell usage
+RUN yes | unminimize
 
 # Create a new user 'mbassale' with a home directory
 RUN useradd -m -s /bin/bash mbassale
