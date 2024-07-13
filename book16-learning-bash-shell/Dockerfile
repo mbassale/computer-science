@@ -8,6 +8,7 @@ RUN apt update && apt install -y \
     vim \
     sudo \
     man-db \
+    netpbm \
     && apt clean
 
 # Unminimize the system to allow interactive shell usage
