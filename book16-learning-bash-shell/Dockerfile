@@ -9,6 +9,7 @@ RUN apt update && apt install -y \
     sudo \
     man-db \
     netpbm \
+    ed \
     && apt clean
 
 # Unminimize the system to allow interactive shell usage
