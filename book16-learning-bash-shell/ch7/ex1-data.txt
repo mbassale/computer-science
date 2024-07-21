@@ -1,0 +1,7 @@
+# Console Settings
+# tty tty-type
+tty01 wy60
+tty03 vt100
+tty04 wy85
+tty08 vt100
+
