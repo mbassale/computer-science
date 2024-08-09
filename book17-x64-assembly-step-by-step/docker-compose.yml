@@ -1,0 +1,16 @@
+# Docker Compose for ASM Dev Environment
+# Author: Marco Bassaletti <bassaletti at gmail.com>
+
+services:
+  dev-environment:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: asm-dev-env:latest
+    platform: linux/amd64
+    container_name: asm-dev-environment
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true
+
