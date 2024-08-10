@@ -19,7 +19,7 @@ RUN yes | unminimize
 SHELL ["/bin/bash", "-c"]
 
 # Create a user for non-root operations
-RUN useradd -m -s /bin/bash mbassale && echo "devuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+RUN useradd -m -s /bin/bash mbassale && echo "mbassale ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Switch to the new user
 USER mbassale

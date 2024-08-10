@@ -2,7 +2,7 @@
 # Author: Marco Bassaletti <bassaletti at gmail.com>
 
 services:
-  dev-environment:
+  dev:
     build:
       context: .
       dockerfile: Dockerfile
