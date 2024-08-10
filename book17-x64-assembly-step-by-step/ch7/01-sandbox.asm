@@ -14,4 +14,8 @@ main:
 
   nop
 
+  mov rax, 60   ; exit syscall
+  mov rdi, 0
+  syscall
+
 section .note.GNU-stack noalloc noexec nowrite progbits
