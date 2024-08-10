@@ -11,6 +11,11 @@ main:
   mov rbp, rsp
   nop
 
+  mov eax, 'WXYZ'
+  xor rax, rax
+  mov cl, 1h
+  mov ch, 2h
+  xchg cl, ch
 
   nop
 
