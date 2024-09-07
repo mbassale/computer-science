@@ -4,7 +4,7 @@ NASM=nasm
 NASMFLAGS=-f elf64 -g -F dwarf
 LD=ld
 
-all: 01-hexdump 02-count-loop 03-test 04-uppercase-xlat
+all: 01-hexdump 02-count-loop 03-test 04-uppercase-xlat 05-new-lines
 
 01-hexdump: 01-hexdump.o
 	$(LD) -o $@ $<
@@ -18,9 +18,12 @@ all: 01-hexdump 02-count-loop 03-test 04-uppercase-xlat
 04-uppercase-xlat: 04-uppercase-xlat.o
 	$(LD) -o $@ $<
 
+05-new-lines: 05-new-lines.o
+	$(LD) -o $@ $<
+
 %.o: %.asm
 	$(NASM) $(NASMFLAGS) -o $@ $<
 
 clean:
-	rm -f *.o 01-hexdump 02-count-loop 03-test 04-uppercase-xlat
+	rm -f *.o 01-hexdump 02-count-loop 03-test 04-uppercase-xlat 05-new-lines
 
