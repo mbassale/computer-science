@@ -108,14 +108,18 @@ impl HttpResponse {
             body,
         }
     }
+
+    fn header(&self) -> String {
+        format!(
+            "HTTP/1.1 {}\r\nContent-Length: {}\r\n",
+            self.status,
+            self.body.len()
+        )
+    }
 }
 
 impl fmt::Display for HttpResponse {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        if self.body.is_empty() {
-            write!(f, "HTTP/1.1 {}\r\n\r\n", self.status)
-        } else {
-            write!(f, "HTTP/1.1 {}\r\n\r\n{}\r\n", self.status, self.body)
-        }
+        write!(f, "{}\r\n{}", self.header(), self.body)
     }
 }
