@@ -12,7 +12,8 @@ use std::net::TcpListener;
 use std::net::TcpStream;
 use std::path::PathBuf;
 use std::str::FromStr;
-use std::thread;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::Arc;
 
 pub mod http;
 use crate::http::HttpMethod;
@@ -31,15 +32,30 @@ fn main() -> Result<()> {
     let listener = TcpListener::bind(addr)?;
     let pool = ThreadPool::new(DEFAULT_THREAD_POOL_SIZE);
 
+    let running_flag = Arc::new(AtomicBool::new(true));
+    let exit_handler_flag = running_flag.clone();
+
+    ctrlc::set_handler(move || {
+        println!("\nCtrl+C received! Shutting down...");
+        exit_handler_flag.store(false, Ordering::SeqCst);
+    })
+    .expect("Error setting Ctrl+C handler");
+
     for stream in listener.incoming() {
-        let stream = stream?;
-        pool.execute(|| match handle_connection(stream) {
-            Ok(_) => (),
-            Err(err) => {
-                eprintln!("Error: {}", err.to_string());
-            }
-        });
+        if running_flag.load(Ordering::SeqCst) {
+            let stream = stream?;
+            pool.execute(|| match handle_connection(stream) {
+                Ok(_) => (),
+                Err(err) => {
+                    eprintln!("Error: {}", err.to_string());
+                }
+            });
+        } else {
+            break;
+        }
     }
+    // signal exit and gracefully finish processing
+    drop(pool);
     Ok(())
 }
 
