@@ -12,23 +12,33 @@ use std::net::TcpListener;
 use std::net::TcpStream;
 use std::path::PathBuf;
 use std::str::FromStr;
+use std::thread;
 
 pub mod http;
 use crate::http::HttpMethod;
 use crate::http::HttpRequest;
 use crate::http::HttpResponse;
 use crate::http::HttpStatus;
+use http_server::ThreadPool;
 
 const DEFAULT_SERVER_ADDRESS: &str = "127.0.0.1";
 const DEFAULT_SERVER_PORT: u16 = 7878;
 const DEFAULT_FILE_ROOT: &str = "www";
+const DEFAULT_THREAD_POOL_SIZE: usize = 4;
 
 fn main() -> Result<()> {
     let addr = build_server_addr()?;
     let listener = TcpListener::bind(addr)?;
+    let pool = ThreadPool::new(DEFAULT_THREAD_POOL_SIZE);
+
     for stream in listener.incoming() {
         let stream = stream?;
-        handle_connection(stream)?;
+        pool.execute(|| match handle_connection(stream) {
+            Ok(_) => (),
+            Err(err) => {
+                eprintln!("Error: {}", err.to_string());
+            }
+        });
     }
     Ok(())
 }
