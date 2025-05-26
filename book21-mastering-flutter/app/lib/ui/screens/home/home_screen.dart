@@ -1,6 +1,7 @@
 import 'package:app/ui/screens/home/home_screen_image.dart';
 import 'package:app/ui/screens/home/horiz_movies.dart';
 import 'package:app/ui/screens/home/title_row.dart';
+import 'package:app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
@@ -38,21 +39,14 @@ class _HomeScreenState extends State<HomeScreen> {
           child: SingleChildScrollView(
             controller: _scrollController,
             child: Container(
-              color: const Color(0xFF111111),
+              color: screenBackground,
               child: Column(
                 children: [
                   Align(
                     alignment: Alignment.center,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 16.0, 0, 24),
-                      child: Text(
-                        'Now Playing',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
+                      child: Text('Now Playing', style: largeTitle),
                     ),
                   ),
                   HomeScreenImage(),

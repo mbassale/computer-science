@@ -1,4 +1,5 @@
 import 'package:app/main_screen.dart';
+import 'package:app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class _MainAppState extends State<MainApp> {
     return MaterialApp(
       title: 'Movies',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: createTheme(),
       home: MainScreen(),
     );
   }
