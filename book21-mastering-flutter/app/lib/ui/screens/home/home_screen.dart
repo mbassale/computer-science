@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   HomeScreenImage(),
                   TitleRow(text: 'Trending', onMoreClicked: () {}),
-                  const HorizontalMovies(movies: images),
+                  const HorizontalMovies(),
                 ],
               ),
             ),
