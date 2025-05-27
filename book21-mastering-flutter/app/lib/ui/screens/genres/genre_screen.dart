@@ -1,6 +1,7 @@
+import 'package:app/providers.dart';
+import 'package:app/ui/widgets/vert_movie_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:app/providers.dart';
 import 'package:app/ui/theme/theme.dart';
 import 'package:app/ui/screens/genres/genre_search_row.dart';
 import 'package:app/ui/screens/genres/genre_section.dart';
@@ -30,6 +31,7 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final images = ref.read(movieImagesProvider);
     return SafeArea(
       child: Container(
         color: screenBackground,
@@ -66,7 +68,7 @@ class _GenreScreenState extends ConsumerState<GenreScreen> {
             ),
             const Divider(),
             SortPicker(onSortSelected: (sorting) {}),
-            // VerticalMovieList(movies: [], onMovieTap: (movieId) {}),
+            VerticalMovieList(movies: images, onMovieTap: (movieId) {}),
           ],
         ),
       ),
