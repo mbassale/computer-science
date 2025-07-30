@@ -3,6 +3,7 @@ aiohttp==3.12.14
 aiosignal==1.4.0
 aiosqlite==0.21.0
 altair==5.5.0
+altgraph==0.17.4
 annotated-types==0.7.0
 anyio==4.9.0
 attrs==25.3.0
@@ -65,6 +66,7 @@ llama-index-workflows==1.2.0
 llama-parse==0.6.52
 lxml==6.0.0
 lxml_html_clean==0.4.2
+macholib==1.16.3
 markdownify==1.1.0
 MarkupSafe==3.0.2
 marshmallow==3.26.1
@@ -92,6 +94,8 @@ pydantic==2.11.7
 pydantic_core==2.33.2
 pydeck==0.9.1
 pyee==13.0.0
+pyinstaller==6.14.2
+pyinstaller-hooks-contrib==2025.8
 pypdf==5.9.0
 PySocks==1.7.1
 python-dateutil==2.9.0.post0
@@ -122,6 +126,12 @@ tldextract==5.3.0
 toml==0.10.2
 tornado==6.5.1
 tqdm==4.67.1
+tree-sitter==0.25.0
+tree-sitter-c-sharp==0.23.1
+tree-sitter-embedded-template==0.23.2
+tree-sitter-language-pack==0.9.0
+tree-sitter-python==0.23.6
+tree-sitter-yaml==0.7.1
 trio==0.30.0
 trio-websocket==0.12.2
 typing-inspect==0.9.0
