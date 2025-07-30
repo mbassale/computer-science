@@ -3,7 +3,7 @@ import psutil
 import logging
 from llama_index.core import Settings, SimpleDirectoryReader
 from llama_index.core.node_parser import SentenceSplitter
-from llama_index.core.extractors import SummaryExtractor
+from llama_index.core.extractors import TitleExtractor
 from llama_index.llms.llama_cpp import LlamaCPP
 from pathlib import Path
 
@@ -37,7 +37,7 @@ nodes = parser.get_nodes_from_documents(documents)
 logging.info("Number of nodes created: %d", len(nodes))
 
 # --- Extract summaries from nodes ---
-summary_extractor = SummaryExtractor(summaries=["prev", "self", "next"])
+summary_extractor = TitleExtractor()
 metadata_list = summary_extractor.extract(nodes)
 logging.info("Number of metadata entries extracted: %d", len(metadata_list))
 for metadata in metadata_list:

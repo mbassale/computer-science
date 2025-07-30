@@ -3,13 +3,13 @@ import psutil
 import logging
 from llama_index.core import Settings, SimpleDirectoryReader
 from llama_index.core.node_parser import SentenceSplitter
-from llama_index.core.extractors import SummaryExtractor
+from llama_index.core.extractors import QuestionsAnsweredExtractor
 from llama_index.llms.llama_cpp import LlamaCPP
 from pathlib import Path
 
 # --- Configure local LLM ---
 models_dir = Path(__file__).parent.parent / "models"
-model_path = models_dir / "Qwen3-4B-Q6_K.gguf"
+model_path = models_dir / "mistral-7b-instruct-v0.3.q6_k.gguf"
 llm = LlamaCPP(
     model_path=str(model_path),
     max_new_tokens=512,
@@ -37,7 +37,7 @@ nodes = parser.get_nodes_from_documents(documents)
 logging.info("Number of nodes created: %d", len(nodes))
 
 # --- Extract summaries from nodes ---
-summary_extractor = SummaryExtractor(summaries=["prev", "self", "next"])
+summary_extractor = QuestionsAnsweredExtractor(questions=5)
 metadata_list = summary_extractor.extract(nodes)
 logging.info("Number of metadata entries extracted: %d", len(metadata_list))
 for metadata in metadata_list:
