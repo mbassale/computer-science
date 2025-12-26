@@ -53,7 +53,7 @@ jsonschema==4.25.0
 jsonschema-specifications==2025.4.1
 llama-cloud==0.1.35
 llama-cloud-services==0.6.52
-llama-index==0.12.52
+llama-index==0.13.0
 llama-index-agent-openai==0.4.12
 llama-index-cli==0.4.4
 llama-index-core==0.12.52.post1
